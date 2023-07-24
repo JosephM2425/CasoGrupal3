@@ -18,14 +18,19 @@ public class GestorBuilder {
         this.usuarios = usuarioDAO.listarUsuarios();
     }
 
-    public void construccionUsuarios(String rol, String nombre, String apellido1, String apellido2, String numeroTelefonico) {
-        director.setBuilder(new UsuarioBuilder());
-        nuevoUsuario(rol, nombre, apellido1, apellido2, numeroTelefonico);
+    public int construccionUsuarios(String rol, String nombre, String apellido1, String apellido2, String numeroTelefonico) {
+        try {
+            director.setBuilder(new UsuarioBuilder());
+            nuevoUsuario(rol, nombre, apellido1, apellido2, numeroTelefonico);
+            return 0;
+        } catch (Exception e) {
+            return 1;
+        }
     }
 
     private void nuevoUsuario(String rol, String nombre, String apellido1, String apellido2, String numeroTelefonico) {
-        director.construirUsuario(rol, nombre, apellido1, apellido2, numeroTelefonico);
-        anadirUsuario(director.getBuilder().getUsuario());
+            director.construirUsuario(rol, nombre, apellido1, apellido2, numeroTelefonico);
+            anadirUsuario(director.getBuilder().getUsuario());
     }
 
     private void anadirUsuario(Usuario usuario) {
@@ -50,6 +55,11 @@ public class GestorBuilder {
             }
         }
         return null;
+    }
+
+    public ArrayList<Usuario> listarUsuarios() {
+        usuarios = usuarioDAO.listarUsuarios();
+        return usuarios;
     }
 
     public ArrayList<Usuario> listarUsuarios(int tipo) {

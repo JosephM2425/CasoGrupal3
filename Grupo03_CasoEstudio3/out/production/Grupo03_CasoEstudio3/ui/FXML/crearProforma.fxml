@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="580.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Controladores.ControladorProforma">
+   <children>
+      <Text layoutX="212.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Creación de proformas" textAlignment="CENTER" wrappingWidth="376.7825012207031">
+         <font>
+            <Font name="Arial Black" size="20.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="clienteCB" layoutX="152.0" layoutY="83.0" prefHeight="26.0" prefWidth="566.0" />
+      <Label layoutX="97.0" layoutY="87.0" text="Cliente: *" />
+      <ComboBox fx:id="vendedorCB" layoutX="152.0" layoutY="122.0" prefHeight="26.0" prefWidth="566.0" />
+      <Label layoutX="81.0" layoutY="126.0" text="Vendedor: *" />
+      <Button layoutX="351.0" layoutY="162.0" mnemonicParsing="false" onAction="#registrarProforma" text="Crear proforma" />
+      <TableView fx:id="listaProformas" layoutX="74.0" layoutY="242.0" prefHeight="217.0" prefWidth="650.0">
+         <columns>
+            <TableColumn fx:id="tNoProforma" prefWidth="92.0" text="No. Proforma" />
+            <TableColumn fx:id="tCliente" prefWidth="201.60003662109375" text="Cliente" />
+            <TableColumn fx:id="tVendedor" prefWidth="227.99993896484375" text="Vendedor" />
+            <TableColumn fx:id="tEstado" prefWidth="123.20001220703125" text="Estado" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>

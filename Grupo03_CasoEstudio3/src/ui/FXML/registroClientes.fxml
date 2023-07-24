@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="268.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.RegistroClientes">
+<AnchorPane maxHeight="600.0" maxWidth="800.0" prefHeight="580.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane layoutX="3.0" layoutY="4.0" prefHeight="263.0" prefWidth="288.0">
          <children>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Controladores.ControladorPrincipal">
+   <children>
+      <TabPane prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+         <Tab text="Inicio">
+             <fx:include source="inicio.fxml" />
+         </Tab>
+          <Tab text="Usuarios">
+              <fx:include source="registroClientes.fxml" />
+          </Tab>
+          <Tab text="Repuestos" />
+          <Tab text="Proformas">
+              <fx:include source="crearProforma.fxml" />
+          </Tab>
+      </TabPane>
+   </children>
+</AnchorPane>

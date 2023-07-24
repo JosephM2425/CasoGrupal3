@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="266.0" prefWidth="219.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.CrearRepuesto">
+   <children>
+      <Pane prefHeight="310.0" prefWidth="219.0">
+         <children>
+            <Text layoutX="68.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crear Repuesto" />
+            <TextField layoutX="34.0" layoutY="49.0" promptText="Nombre" />
+            <TextField layoutX="34.0" layoutY="88.0" prefWidth="149.0" promptText="Descripcion" />
+            <TextField layoutX="34.0" layoutY="124.0" prefWidth="149.0" promptText="Categoria" />
+            <TextField layoutX="34.0" layoutY="166.0" prefWidth="149.0" promptText="Precio" />
+            <Button layoutX="34.0" layoutY="213.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Crear" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

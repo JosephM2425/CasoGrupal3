@@ -52,9 +52,13 @@ public class GestorBuilder {
         return null;
     }
 
+    public ArrayList<Usuario> listarUsuarios(int tipo) {
+        usuarios = usuarioDAO.listarUsuarios(tipo);
+        return usuarios;
+    }
 
     public String mostrarUsuarios() {
-        usuarios = usuarioDAO.listarUsuarios();
+        usuarios = usuarioDAO.listarUsuarios(1);
 
         String Usuarios = "Usuarios: \n";
 

@@ -25,10 +25,15 @@ public class CompositeGestor {
 
     //Metodos
 
-    public void nuevaProforma(Cliente cliente, Vendedor vendedor, String estado) {
-        iComponente temp = null;
-        temp = new Proforma(cliente, vendedor, estado);
-        _ProformaDAO.registrarProforma((Proforma)temp);
+    public int nuevaProforma(Cliente cliente, Vendedor vendedor, String estado) {
+        try {
+            iComponente temp = null;
+            temp = new Proforma(cliente, vendedor, estado);
+            _ProformaDAO.registrarProforma((Proforma) temp);
+            return 0;
+        } catch (Exception e) {
+            return 1;
+        }
     }
 
     public void nuevoDetalle(int idProforma, int idRepuesto, String estado) {
@@ -66,7 +71,7 @@ public class CompositeGestor {
         return null;
     }
 
-    private ArrayList<iComponente> obtenerComponentes(int tipo) {
+    public ArrayList<iComponente> obtenerComponentes(int tipo) {
         switch(tipo) {
             case 1:
                 return _ProformaDAO.listarProformas();
@@ -74,6 +79,16 @@ public class CompositeGestor {
                 return _DetalleDAO.listarDetalles();
         }
         return null;
+    }
+
+    public ArrayList<Proforma> obtenerProformas() {
+        ArrayList<Proforma> tempArr = new ArrayList<Proforma>();
+        ArrayList<iComponente> tempArr2 = obtenerComponentes(1);
+
+        for (iComponente item : tempArr2) {
+            tempArr.add((Proforma) item);
+        }
+        return tempArr;
     }
 
     public String obtenerLista(int tipo) {

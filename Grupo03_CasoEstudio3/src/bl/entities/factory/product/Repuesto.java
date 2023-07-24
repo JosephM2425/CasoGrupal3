@@ -1,15 +1,17 @@
-package producto;
-import Enum.*;
+package bl.entities.factory.product;
+import bl.entities.factory.objects.*;
 
 public abstract class Repuesto {
-    private TipoRepuestoEnum tipoRepuesto;
+    private int id_Repuesto;
+    private TipoRepuesto TipoRepuesto;
     private String nombre;
     private String descripcion;
     private String categoria;
     private float precio;
-    private MarcaEnum marcaRepuesto;
+    private MarcaRepuesto MarcaRepuesto;
     /**Constructores**/
-    public Repuesto(TipoRepuestoEnum tipoRepuesto, String nombre, String descripcion, String categoria, float precio, MarcaEnum marcaRepuesto) {
+    public Repuesto(int id_Repuesto,TipoRepuesto tipoRepuesto, String nombre, String descripcion, String categoria, float precio, MarcaRepuesto marcaRepuesto) {
+        setId_Repuesto(id_Repuesto);
         setTipoRepuesto(tipoRepuesto);
         setNombre(nombre);
         setDescripcion(descripcion);
@@ -19,17 +21,21 @@ public abstract class Repuesto {
     }
 
     public Repuesto() {
-        setTipoRepuesto(TipoRepuestoEnum.REPUESTO);
+        setId_Repuesto(0);
+        setTipoRepuesto(null);
         setNombre("Repuesto");
         setDescripcion("");
         setCategoria("");
         setPrecio(0);
-        setMarcaRepuesto(MarcaEnum.MARCA);
+        setMarcaRepuesto(null);
     }
 
     /**Getters**/
-    public TipoRepuestoEnum getTipoRepuesto() {
-        return tipoRepuesto;
+    public int getId_Repuesto() {
+        return id_Repuesto;
+    }
+    public TipoRepuesto getTipoRepuesto() {
+        return TipoRepuesto;
     }
     public String getNombre() {
         return nombre;
@@ -43,13 +49,16 @@ public abstract class Repuesto {
     public float getPrecio() {
         return precio;
     }
-    public MarcaEnum getMarcaRepuesto() {
-        return marcaRepuesto;
+    public MarcaRepuesto getMarcaRepuesto() {
+        return MarcaRepuesto;
     }
 
     /**Setters**/
-    public void setTipoRepuesto(TipoRepuestoEnum tipoRepuesto) {
-        this.tipoRepuesto = tipoRepuesto;
+    public void setId_Repuesto(int id_Repuesto) {
+        this.id_Repuesto = id_Repuesto;
+    }
+    public void setTipoRepuesto(TipoRepuesto tipoRepuesto) {
+        this.TipoRepuesto = tipoRepuesto;
     }
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -63,8 +72,8 @@ public abstract class Repuesto {
     public void setPrecio(float precio) {
         this.precio = precio;
     }
-    public void setMarcaRepuesto(MarcaEnum marcaRepuesto) {
-        this.marcaRepuesto = marcaRepuesto;
+    public void setMarcaRepuesto(MarcaRepuesto marcaRepuesto) {
+        this.MarcaRepuesto = marcaRepuesto;
     }
 
 }

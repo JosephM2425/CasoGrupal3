@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="580.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Controladores.ControladorProforma">
+<AnchorPane prefHeight="560.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Controladores.ControladorProforma">
    <children>
       <Text layoutX="212.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Creación de proformas" textAlignment="CENTER" wrappingWidth="376.7825012207031">
          <font>

@@ -11,11 +11,11 @@
              <fx:include source="inicio.fxml" />
          </Tab>
           <Tab text="Usuarios">
-              <fx:include source="registroClientes.fxml" />
+              <fx:include source="registroUsuarios.fxml" />
           </Tab>
           <Tab text="Repuestos" />
           <Tab text="Proformas">
-              <fx:include source="crearProforma.fxml" />
+              <fx:include source="proformas.fxml" />
           </Tab>
       </TabPane>
    </children>

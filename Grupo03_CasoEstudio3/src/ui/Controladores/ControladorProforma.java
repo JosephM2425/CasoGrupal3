@@ -44,6 +44,7 @@ public class ControladorProforma {
     public ObservableList<Usuario> observableVendedores;
     private GestorBuilder gestorBuilder = new GestorBuilder();
     private CompositeGestor gestorComposite = new CompositeGestor();
+    private ControladorRepuestosProforma controladorRepuestosProforma = new ControladorRepuestosProforma();
 
 
     /**
@@ -126,6 +127,7 @@ public class ControladorProforma {
                     mostrarAlerta(Alert.AlertType.INFORMATION, "Registro de proforma exitoso", "La proforma se ha registrado correctamente.");
                     resetearValores();
                     cargarListaProformas();
+                    controladorRepuestosProforma.cargarComboBoxes();
                 }
                 else {
                     mostrarAlerta(Alert.AlertType.ERROR, "Error en el registro de proforma", "Ha ocurrido un error en el registro de la proforma,\npor favor inténtelo de nuevo.");

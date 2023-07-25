@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="438.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Controladores.ControladorGestionProformas">
+   <children>
+      <ComboBox layoutX="154.0" layoutY="25.0" prefHeight="25.0" prefWidth="456.0" />
+      <Text layoutX="82.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Proformas" />
+      <TableView layoutX="82.0" layoutY="94.0" prefHeight="292.0" prefWidth="618.0">
+        <columns>
+          <TableColumn prefWidth="126.0" text="NombreRepuesto" />
+          <TableColumn prefWidth="105.0" text="DescRepuesto" />
+            <TableColumn prefWidth="60.0" text="Marca" />
+            <TableColumn prefWidth="107.0" text="DescRepuesto" />
+            <TableColumn prefWidth="149.0" text="Razón" />
+            <TableColumn prefWidth="70.0" text="Estado" />
+        </columns>
+      </TableView>
+      <Text layoutX="96.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Detalles Proforma" />
+      <Button layoutX="286.0" layoutY="399.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="211.0" text="Guardar" />
+      <Button layoutX="624.0" layoutY="25.0" mnemonicParsing="false" text="Seleccionar" />
+   </children>
+</AnchorPane>

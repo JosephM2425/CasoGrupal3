@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="664.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Controladores.ControladorGestionProformas">
+   <children>
+      <ComboBox layoutX="141.0" layoutY="25.0" prefHeight="25.0" prefWidth="409.0" />
+      <Text layoutX="72.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Proformas" />
+      <TableView layoutX="23.0" layoutY="95.0" prefHeight="292.0" prefWidth="618.0">
+        <columns>
+          <TableColumn prefWidth="126.0" text="NombreRepuesto" />
+          <TableColumn prefWidth="105.0" text="DescRepuesto" />
+            <TableColumn prefWidth="60.0" text="Marca" />
+            <TableColumn prefWidth="90.0" text="DescRepuesto" />
+            <TableColumn prefWidth="166.0" text="Razón" />
+            <TableColumn prefWidth="70.0" text="Estado" />
+        </columns>
+      </TableView>
+      <Text layoutX="271.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Detalles Proforma" />
+   </children>
+</AnchorPane>

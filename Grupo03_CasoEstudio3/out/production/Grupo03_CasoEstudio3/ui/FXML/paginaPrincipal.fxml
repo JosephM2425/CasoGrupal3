@@ -13,7 +13,9 @@
           <Tab text="Usuarios">
               <fx:include source="registroUsuarios.fxml" />
           </Tab>
-          <Tab text="Repuestos" />
+          <Tab text="Repuestos">
+                <fx:include source="crearRepuesto.fxml"/>
+          </Tab>
           <Tab text="Proformas">
               <fx:include source="proformas.fxml" />
           </Tab>

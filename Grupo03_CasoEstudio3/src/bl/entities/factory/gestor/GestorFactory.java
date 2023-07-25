@@ -60,11 +60,6 @@ public class GestorFactory {
     public void eliminarRepuesto(Repuesto repuesto){
         repuestoDAO.eliminarRepuesto(repuesto);
     }
-
-
-    public void buscarMarcaRepuesto(int id_MarcaRepuesto){
-        marcaRepuestoDAO.obtenerMarcaRepuesto(id_MarcaRepuesto);
-    }
     public void buscarTipoRepuesto(int id_TipoRepuesto){
         tipoRepuestoDAO.obtenerTipoRepuesto(id_TipoRepuesto);
     }

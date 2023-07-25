@@ -2,7 +2,6 @@ package bl.DAO;
 
 import java.sql.*;
 import java.util.ArrayList;
-
 import bl.config.Conexion;
 import bl.entities.builder.objects.*;
 import bl.entities.composite.base.iComponente;

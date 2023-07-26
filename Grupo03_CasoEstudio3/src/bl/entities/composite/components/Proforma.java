@@ -3,6 +3,8 @@ package bl.entities.composite.components;
 import bl.entities.builder.objects.Cliente;
 import bl.entities.builder.objects.Vendedor;
 import bl.entities.composite.base.iComponente;
+import bl.entities.state.State;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -10,6 +12,8 @@ public class Proforma extends iComponente{
     private Cliente cliente;
     private Vendedor vendedor;
     private String estado;
+    private State state;
+
     private ArrayList<iComponente> listaDetalles; //Contiene detalles de la proforma
 
     //Constructores
@@ -119,5 +123,12 @@ public class Proforma extends iComponente{
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+
+    //Metodos del Patro State
+    public void changeState(State state, String estado) {
+        this.state = state;
+        this.estado = estado;
     }
 }

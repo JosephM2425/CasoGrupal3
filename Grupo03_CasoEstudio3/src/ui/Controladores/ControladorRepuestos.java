@@ -19,6 +19,9 @@ public class ControladorRepuestos {
     TableView<Repuesto> listaRepuestos;
     @FXML
     TableColumn<Repuesto,String> tNombre;
+    @
+    FXML
+    TableColumn<Repuesto,String> tDescripcion;
     @FXML
     TableColumn<Repuesto,String> tTipo;
     @FXML
@@ -99,6 +102,18 @@ public class ControladorRepuestos {
         }
     }
 
+    /**
+     * Metodo para resetear los valores del formulario
+     */
+    public void resetearValores() {
+        nombreTF.setText("");
+        descripcionTF.setText("");
+        precioTF.setText("");
+        tipoRepuestoCB.setValue(null);
+        marcaRepuestoCB.setValue(null);
+        categoriaCB.setValue(null);
+    }
+
     public void registrarRepuesto(ActionEvent actionEvent) {
         try {
             if(nombreTF.getText().isEmpty()|| descripcionTF.getText().isEmpty() || categoriaCB.getValue() == null || precioTF.getText().isEmpty() || tipoRepuestoCB.getValue() == null || marcaRepuestoCB.getValue() == null){
@@ -108,6 +123,8 @@ public class ControladorRepuestos {
                 Repuesto repuesto = fabric.crearRepuesto(tipoRepuestoCB.getValue(), nombreTF.getText(), descripcionTF.getText(), categoriaCB.getValue(), Float.parseFloat(precioTF.getText()), marcaRepuestoCB.getValue());
                 gestorFactory.insertarRepuesto(repuesto);
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Repuesto creado!", "El repuesto ha sido creado exitosamente");
+                resetearValores();
+                cargarListaRepuestos();
             }
         } catch (NumberFormatException e) {
             mostrarAlerta(Alert.AlertType.ERROR, "El campo sólo acepta valores numéricos.", "El campo precio solo acepta valores numéricos.");
@@ -127,6 +144,7 @@ public class ControladorRepuestos {
             gestorFactory.listarRepuestos().forEach(repuesto -> observableRepuestos.addAll(repuesto));
             observableRepuestos = FXCollections.observableArrayList(gestorFactory.listarRepuestos());
             tNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre() + ""));
+            tDescripcion.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescripcion() + ""));
             tTipo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoRepuesto().getTipoRepuesto() + ""));
             tCategoria.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCategoria() + ""));
             tMarca.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMarcaRepuesto().getMarca() + ""));

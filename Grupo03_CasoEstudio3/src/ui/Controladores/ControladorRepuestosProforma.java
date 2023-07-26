@@ -93,6 +93,10 @@ public class ControladorRepuestosProforma {
         alert.show();
     }
 
+    public void actualizarProformas (ActionEvent actionEvent) {
+        cargarComboBoxes();
+    }
+
 //    /**
 //     * Metodo para actualizar el TableView de las proformas
 //     */

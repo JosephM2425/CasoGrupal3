@@ -12,9 +12,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
+
+import java.util.ArrayList;
 
 /**
  * @author Carolina Arias
@@ -44,8 +47,6 @@ public class ControladorProforma {
     public ObservableList<Usuario> observableVendedores;
     private GestorBuilder gestorBuilder = new GestorBuilder();
     private CompositeGestor gestorComposite = new CompositeGestor();
-    private ControladorRepuestosProforma controladorRepuestosProforma = new ControladorRepuestosProforma();
-
 
     /**
      * Metodo para inicializar el ObservableList y el TableView
@@ -106,11 +107,16 @@ public class ControladorProforma {
     }
 
     /**
-     * Metodo para resetear los valores dem los TextField
+     * Metodo para resetear los valores del formulario
      */
     public void resetearValores() {
         clienteCB.getSelectionModel().clearSelection();
         vendedorCB.getSelectionModel().clearSelection();
+    }
+
+    public void actualizarUsuarios(ActionEvent actionEvent) {
+        resetearValores();
+        cargarComboBoxes();
     }
 
     /**
@@ -127,7 +133,6 @@ public class ControladorProforma {
                     mostrarAlerta(Alert.AlertType.INFORMATION, "Registro de proforma exitoso", "La proforma se ha registrado correctamente.");
                     resetearValores();
                     cargarListaProformas();
-                    controladorRepuestosProforma.cargarComboBoxes();
                 }
                 else {
                     mostrarAlerta(Alert.AlertType.ERROR, "Error en el registro de proforma", "Ha ocurrido un error en el registro de la proforma,\npor favor inténtelo de nuevo.");

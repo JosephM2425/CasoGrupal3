@@ -108,7 +108,7 @@ public class RepuestoDAO {
         MarcaRepuesto marcaRepuesto = new MarcaRepuesto();
         marcaRepuesto.setMarca(rs.getString("Marca"));
         marcaRepuesto.setIdMarcaRepuesto(rs.getInt("idMarcaRespuesto"));
-        Repuesto tmpRepuesto = gFabrica.crearRepuesto(tipoRepuesto, rs.getString("nombre"), rs.getString("descripcion"),rs.getString("categoria"),rs.getFloat("precio"),marcaRepuesto);
+        Repuesto tmpRepuesto = gFabrica.crearRepuesto(rs.getInt("id_Repuesto"),tipoRepuesto, rs.getString("nombre"), rs.getString("descripcion"),rs.getString("categoria"),rs.getFloat("precio"),marcaRepuesto);
         return tmpRepuesto;
     }
 

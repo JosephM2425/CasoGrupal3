@@ -91,7 +91,16 @@ public class CompositeGestor {
         return tempArr;
     }
 
-    public String obtenerLista(int tipo) {
+    public ArrayList<Detalle> obtenerDetalles() {
+        ArrayList<Detalle> tempArr = new ArrayList<Detalle>();
+        ArrayList<iComponente> tempArr2 = obtenerComponentes(2);
+        for (iComponente item : tempArr2) {
+            tempArr.add((Detalle) item);
+        }
+        return tempArr;
+    }
+
+    public ArrayList<iComponente> obtenerLista(int tipo) {
         String Mensaje = "";
         ArrayList<iComponente> tempArr = obtenerComponentes(tipo);
 
@@ -99,6 +108,6 @@ public class CompositeGestor {
             for (iComponente item : tempArr)
                 Mensaje += item.mostrarDatos() + "\n";
         }
-        return Mensaje;
+        return tempArr;
     }
 }

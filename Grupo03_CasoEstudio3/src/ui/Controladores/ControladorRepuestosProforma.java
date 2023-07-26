@@ -7,6 +7,8 @@ import bl.entities.builder.objects.Vendedor;
 import bl.entities.composite.components.Detalle;
 import bl.entities.composite.components.Proforma;
 import bl.entities.composite.gestor.CompositeGestor;
+import bl.entities.factory.gestor.GestorFactory;
+import bl.entities.factory.product.Repuesto;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,6 +26,23 @@ import javafx.util.Callback;
  */
 public class ControladorRepuestosProforma {
     @FXML
+    TableView<Repuesto> listaRepuestos;
+    @FXML
+    TableColumn<Repuesto,String> tIdRepuesto;
+    @
+            FXML
+    TableColumn<Repuesto,String> tNombreRepuesto;
+    @FXML
+    TableColumn<Repuesto,String> tDescRepuesto;
+    @FXML
+    TableColumn<Repuesto,String> tCatRepuesto;
+    @FXML
+    TableColumn<Repuesto,String> tMarcaRepuesto;
+    @FXML
+    TableColumn<Repuesto,String> tPrecioRepuesto;
+    @FXML
+    public ObservableList<Repuesto> observableRepuestos;
+    @FXML
     TableView<Detalle> listaDetalles;
     @FXML
     TableColumn<Detalle,String> tIdDetalle;
@@ -35,10 +54,11 @@ public class ControladorRepuestosProforma {
     TableColumn<Detalle,String> tRazonRechazo;
     @FXML
     public ObservableList<Detalle> observableDetalles;
-    public ComboBox<Proforma> proformaCB = new ComboBox<>();
+    public ComboBox<Proforma> proformaCB;
     @FXML
     public ObservableList<Proforma> observableProformas;
     private CompositeGestor gestorComposite = new CompositeGestor();
+    private GestorFactory gestorFactory = new GestorFactory();
 
     /**
      * Metodo para inicializar el ObservableList y el TableView
@@ -71,7 +91,7 @@ public class ControladorRepuestosProforma {
                             if (item == null || empty) {
                                 setGraphic(null);
                             } else {
-                                setText("[" + item.getId() + "] " + "Cliente: " +item.getCliente().getNombre() + " " + item.getCliente().getApellido1() + " | Vendedor: " + item.getVendedor().getNombre() + " " + item.getVendedor().getApellido1());
+                                setText("[ID: " + item.getId() + "] " + "Cliente: " +item.getCliente().getNombre() + " " + item.getCliente().getApellido1() + " | Vendedor: " + item.getVendedor().getNombre() + " " + item.getVendedor().getApellido1() + " | Nave Código: " + item.getNave().getCodigoIdentificacion());
                             }
                         }
                     };
@@ -97,23 +117,33 @@ public class ControladorRepuestosProforma {
         cargarComboBoxes();
     }
 
-//    /**
-//     * Metodo para actualizar el TableView de las proformas
-//     */
-//    public void cargarListaProformas() {
-//        try {
-//            listaProformas.getItems().clear();
-//            observableProformas = FXCollections.observableArrayList();
-//            gestorComposite.obtenerProformas().forEach(proforma -> observableProformas.addAll(proforma));
-//            observableProformas = FXCollections.observableArrayList(gestorComposite.obtenerProformas());
-//            tNoProforma.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId() + ""));
-//            tCliente.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCliente().getNombre() + " " + cellData.getValue().getCliente().getApellido1() + " " + cellData.getValue().getCliente().getApellido2()));
-//            tVendedor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getVendedor().getNombre() + " " + cellData.getValue().getVendedor().getApellido1() + " " + cellData.getValue().getVendedor().getApellido2()));
-//            tEstado.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEstado() + ""));
-//            listaProformas.setItems(observableProformas);
-//            cargarComboBoxes();
-//        } catch (Exception e){
-//            mostrarAlerta(Alert.AlertType.ERROR,"Error.","Ha ocurrido un error, por favor inténtelo de nuevo.");
-//        }
-//    }
+    /**
+     * Metodo para actualizar el TableView de las repuestos
+     */
+    public void cargarListaRepuestos(Proforma proforma) {
+        try {
+            listaRepuestos.getItems().clear();
+            int idMarcaModeloNave = proforma.getNave().getMarcaModeloNave().getIdMarcaModeloNave();
+            observableRepuestos = FXCollections.observableArrayList(gestorFactory.listarRepuestosCompatibles(idMarcaModeloNave));
+            gestorFactory.listarRepuestosCompatibles(idMarcaModeloNave).forEach(repuesto -> observableRepuestos.addAll(repuesto));
+            observableRepuestos = FXCollections.observableArrayList(gestorFactory.listarRepuestosCompatibles(idMarcaModeloNave));
+            tIdRepuesto.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId_Repuesto() + ""));
+            tNombreRepuesto.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
+            tDescRepuesto.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescripcion()));
+            tCatRepuesto.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCategoria()));
+            tMarcaRepuesto.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMarcaRepuesto().getMarca()));
+            tPrecioRepuesto.setCellValueFactory(cellData -> new SimpleStringProperty("$" + cellData.getValue().getPrecio()));
+            listaRepuestos.setItems(observableRepuestos);
+            cargarComboBoxes();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void seleccionarProforma(ActionEvent actionEvent) {
+        if(proformaCB.getValue() != null) {
+            listaRepuestos.getItems().clear();
+            cargarListaRepuestos(proformaCB.getValue());
+        }
+    }
 }

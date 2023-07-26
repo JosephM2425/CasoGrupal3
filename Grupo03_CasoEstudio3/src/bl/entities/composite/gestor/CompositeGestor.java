@@ -4,6 +4,7 @@ import bl.DAO.DetalleDAO;
 import bl.DAO.ProformaDAO;
 import bl.entities.builder.gestor.GestorBuilder;
 import bl.entities.builder.objects.Cliente;
+import bl.entities.builder.objects.Nave;
 import bl.entities.builder.objects.Vendedor;
 import bl.entities.composite.base.iComponente;
 import bl.entities.composite.components.Detalle;
@@ -25,10 +26,10 @@ public class CompositeGestor {
 
     //Metodos
 
-    public int nuevaProforma(Cliente cliente, Vendedor vendedor, String estado) {
+    public int nuevaProforma(Cliente cliente, Vendedor vendedor, Nave nave, String estado) {
         try {
             iComponente temp = null;
-            temp = new Proforma(cliente, vendedor, estado);
+            temp = new Proforma(cliente, vendedor, nave, estado);
             _ProformaDAO.registrarProforma((Proforma) temp);
             return 0;
         } catch (Exception e) {

@@ -81,6 +81,7 @@ public class Proforma extends iComponente{
 
     //Metodos
 
+
     /**
      * Agrega un detalle a la lista de detalles de la proforma
      * @param detalle es de tipo iComponente y corresponde al detalle de la proforma

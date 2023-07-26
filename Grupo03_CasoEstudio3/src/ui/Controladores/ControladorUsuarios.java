@@ -119,7 +119,8 @@ public class ControladorUsuarios {
             tTipoUsuario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRol() + ""));
             listaUsuarios.setItems(observableUsuarios);
         } catch (Exception e){
-            mostrarAlerta(Alert.AlertType.ERROR,"Error.","Ha ocurrido un error, por favor inténtelo de nuevo.");
+            e.printStackTrace();
+            //mostrarAlerta(Alert.AlertType.ERROR,"Error.","Ha ocurrido un error, por favor inténtelo de nuevo.");
         }
     }
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="580.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TabPane prefHeight="580.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab text="Registro de naves">
+            <fx:include source="registroNaves.fxml" />
+            </Tab>
+          <Tab text="Registro de marcas, modelos y categorías">
+            <fx:include source="registroMMC.fxml" />
+            </Tab>
+            <Tab text="Naves por cliente">
+                <fx:include source="naveCliente.fxml" />
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

@@ -169,4 +169,12 @@ public class ControladorRepuestos {
         cargarListaRepuestos();
     }
 
+    public void resetearValores(){
+        nombreTF.setText("");
+        descripcionTF.setText("");
+        precioTF.setText("");
+        tipoRepuestoCB.setValue(null);
+        marcaRepuestoCB.setValue(null);
+        categoriaCB.setValue(null);
+    }
 }

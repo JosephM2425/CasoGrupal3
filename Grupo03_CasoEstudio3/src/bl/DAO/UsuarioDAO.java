@@ -4,6 +4,9 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import bl.config.Conexion;
+import bl.entities.builder.builders.UsuarioBuilder;
+import bl.entities.builder.directores.Director;
+import bl.entities.builder.gestor.GestorBuilder;
 import bl.entities.builder.objects.*;
 /**
  * @author Carolina Arias
@@ -13,6 +16,8 @@ import bl.entities.builder.objects.*;
  * Esta clase se encarga de gestionar el acceso a datos de los objetos Usuario
  */
 public class UsuarioDAO {
+    private Director director = new Director();
+
     /**
      * Metodo para registrar un usuario
      * @param usuario es de tipo Usuario y corresponde al usuario por registrar
@@ -58,31 +63,21 @@ public class UsuarioDAO {
             rs = stmt.executeQuery(query);
 
             while (rs.next()) {
+
+                int id = rs.getInt("ID_USUARIO");
                 int rol = rs.getInt("ID_ROL");
-
-                Usuario usuario = null;
-                switch (rol) {
-                    case 1:
-                        usuario = new Cliente();
-                        break;
-                    case 2:
-                        usuario = new Vendedor();
-                        break;
-                }
-
-                usuario.setId(rs.getInt("ID_USUARIO"));
-                usuario.setRol(rol == 1 ? "Cliente" : "Vendedor");
-                usuario.setNombre(rs.getString("NOMBRE"));
-                usuario.setApellido1(rs.getString("APELLIDO1"));
-                usuario.setApellido2(rs.getString("APELLIDO2"));
-                usuario.setNumeroTelefonico(rs.getString("TELEFONO"));
+                String rolStr = rol == 1 ? "Cliente" : "Vendedor";
+                String nombre = rs.getString("NOMBRE");
+                String apellido1 = rs.getString("APELLIDO1");
+                String apellido2 = rs.getString("APELLIDO2");
+                String telefono = rs.getString("TELEFONO");
+                Usuario usuario = director.construirUsuario(id, rolStr, nombre, apellido1, apellido2, telefono);
                 usuarios.add(usuario);
-
                 con.Desconectar();
             }
             
         } catch (Exception e){
-            return null;
+            e.printStackTrace();
         }
         return usuarios;
     }

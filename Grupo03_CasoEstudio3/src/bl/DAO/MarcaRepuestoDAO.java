@@ -1,7 +1,6 @@
 package bl.DAO;
 
 import bl.config.Conexion;
-import bl.config.Configuracion;
 import bl.entities.factory.objects.MarcaRepuesto;
 import java.sql.*;
 import java.util.ArrayList;
@@ -43,7 +42,6 @@ public class MarcaRepuestoDAO {
         return marcasRepuesto;
     }
     public void actualizarMarcaRepuesto(MarcaRepuesto tmpMarcaRepuesto){
-        Configuracion configuracion = new Configuracion();
         try {
             Conexion con = new Conexion();
             String query = "UPDATE HnI_MarcaRespuesto SET Marca=? WHERE idMarcaRepuesto=?";
@@ -59,7 +57,6 @@ public class MarcaRepuestoDAO {
         }
     }
     public void eliminarMarcaRepuesto(MarcaRepuesto tmpMarcaRepuesto){
-        Configuracion configuracion = new Configuracion();
         try {
             Conexion con = new Conexion();
             String query = "DELETE FROM HnI_MarcaRespuesto WHERE idMarcaRepuesto=?";

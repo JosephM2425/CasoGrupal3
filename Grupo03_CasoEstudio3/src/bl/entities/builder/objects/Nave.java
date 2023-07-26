@@ -1,69 +1,116 @@
 package bl.entities.builder.objects;
 
 public class Nave {
-        private String categoria;
-        private String marca;
-        private String modelo;
-        private int anio;
+
+        private int idNave;
+        private Usuario usuario;
+        private CategoriaNave categoriaNave;
+        private MarcaModeloNave marcaModeloNave;
         private String codigoIdentificacion;
         private String color;
 
-        public Nave(String categoria, String marca, String modelo, int anio, String codigoIdentificacion, String color) {
-            this.categoria = categoria;
-            this.marca = marca;
-            this.modelo = modelo;
-            this.anio = anio;
-            this.codigoIdentificacion = codigoIdentificacion;
-            this.color = color;
+        /**
+         * Constructor por defecto
+         */
+        public Nave() {
+
         }
 
-        public String getCategoria() {
-            return categoria;
-        }
+        /**
+         * Constructor con todos los atributos
+         * @param idNave es de tipo int y corresponde al id de la nave
+         * @param usuario es de tipo Usuario y corresponde al usuario de la nave
+         * @param categoriaNave es de tipo CategoriaNave y corresponde a la categoria de la nave
+         * @param marcaModeloNave es de tipo MarcaModeloNave y corresponde a la marca y modelo de la nave
+         * @param codigoIdentificacion es de tipo String y corresponde al codigo de identificacion de la nave
+         * @param color es de tipo String y corresponde al color de la nave
+         */
+    public Nave(int idNave, Usuario usuario, CategoriaNave categoriaNave, MarcaModeloNave marcaModeloNave, String codigoIdentificacion, String color) {
+        this.idNave = idNave;
+        this.usuario = usuario;
+        this.categoriaNave = categoriaNave;
+        this.marcaModeloNave = marcaModeloNave;
+        this.codigoIdentificacion = codigoIdentificacion;
+        this.color = color;
+    }
 
-        public void setCategoria(String categoria) {
-            this.categoria = categoria;
-        }
+    /**
+     * Constructor con todos los atributos menos el id de la nave
+     * @param usuario es de tipo Usuario y corresponde al usuario de la nave
+     * @param categoriaNave es de tipo CategoriaNave y corresponde a la categoria de la nave
+     * @param marcaModeloNave es de tipo MarcaModeloNave y corresponde a la marca y modelo de la nave
+     * @param codigoIdentificacion es de tipo String y corresponde al codigo de identificacion de la nave
+     * @param color es de tipo String y corresponde al color de la nave
+     */
+    public Nave(Usuario usuario, CategoriaNave categoriaNave, MarcaModeloNave marcaModeloNave, String codigoIdentificacion, String color) {
+        this.usuario = usuario;
+        this.categoriaNave = categoriaNave;
+        this.marcaModeloNave = marcaModeloNave;
+        this.codigoIdentificacion = codigoIdentificacion;
+        this.color = color;
+    }
 
-        public String getMarca() {
-            return marca;
-        }
+    //Getters y Setters
 
-        public void setMarca(String marca) {
-            this.marca = marca;
-        }
+    public int getIdNave() {
+        return idNave;
+    }
 
-        public String getModelo() {
-            return modelo;
-        }
+    public void setIdNave(int idNave) {
+        this.idNave = idNave;
+    }
 
-        public void setModelo(String modelo) {
-            this.modelo = modelo;
-        }
+    public Usuario getUsuario() {
+        return usuario;
+    }
 
-        public int getAnio() {
-            return anio;
-        }
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
-        public void setAnio(int anio) {
-            this.anio = anio;
-        }
+    public CategoriaNave getCategoriaNave() {
+        return categoriaNave;
+    }
 
-        public String getCodigoIdentificacion() {
-            return codigoIdentificacion;
-        }
+    public void setCategoriaNave(CategoriaNave categoriaNave) {
+        this.categoriaNave = categoriaNave;
+    }
 
-        public void setCodigoIdentificacion(String codigoIdentificacion) {
-            this.codigoIdentificacion = codigoIdentificacion;
-        }
+    public MarcaModeloNave getMarcaModeloNave() {
+        return marcaModeloNave;
+    }
 
-        public String getColor() {
-            return color;
-        }
+    public void setMarcaModeloNave(MarcaModeloNave marcaModeloNave) {
+        this.marcaModeloNave = marcaModeloNave;
+    }
 
-        public void setColor(String color) {
-            this.color = color;
-        }
+    public String getCodigoIdentificacion() {
+        return codigoIdentificacion;
+    }
 
+    public void setCodigoIdentificacion(String codigoIdentificacion) {
+        this.codigoIdentificacion = codigoIdentificacion;
+    }
 
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    //Metodos
+
+    @Override
+    public String toString() {
+        return "Nave{" +
+                "idNave=" + idNave +
+                ", usuario=" + usuario +
+                ", categoriaNave=" + categoriaNave +
+                ", marcaModeloNave=" + marcaModeloNave +
+                ", codigoIdentificacion='" + codigoIdentificacion + '\'' +
+                ", color='" + color + '\'' +
+                '}';
+    }
 }

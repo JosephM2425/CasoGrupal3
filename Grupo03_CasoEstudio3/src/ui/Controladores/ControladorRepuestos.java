@@ -108,6 +108,8 @@ public class ControladorRepuestos {
                 Repuesto repuesto = fabric.crearRepuesto(tipoRepuestoCB.getValue(), nombreTF.getText(), descripcionTF.getText(), categoriaCB.getValue(), Float.parseFloat(precioTF.getText()), marcaRepuestoCB.getValue());
                 gestorFactory.insertarRepuesto(repuesto);
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Repuesto creado!", "El repuesto ha sido creado exitosamente");
+                resetearValores();
+                cargarListaRepuestos();
             }
         } catch (NumberFormatException e) {
             mostrarAlerta(Alert.AlertType.ERROR, "El campo sólo acepta valores numéricos.", "El campo precio solo acepta valores numéricos.");
@@ -151,4 +153,12 @@ public class ControladorRepuestos {
         cargarListaRepuestos();
     }
 
+    public void resetearValores(){
+        nombreTF.setText("");
+        descripcionTF.setText("");
+        precioTF.setText("");
+        tipoRepuestoCB.setValue(null);
+        marcaRepuestoCB.setValue(null);
+        categoriaCB.setValue(null);
+    }
 }

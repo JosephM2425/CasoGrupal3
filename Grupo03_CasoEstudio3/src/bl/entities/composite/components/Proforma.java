@@ -126,7 +126,7 @@ public class Proforma extends iComponente{
     }
 
 
-    //Metodos del Patro State
+    //Metodos del Patron State
     public void changeState(State state, String estado) {
         this.state = state;
         this.estado = estado;

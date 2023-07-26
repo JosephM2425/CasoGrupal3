@@ -1,6 +1,7 @@
 package bl.entities.composite.components;
 
 import bl.entities.builder.objects.Cliente;
+import bl.entities.builder.objects.Nave;
 import bl.entities.builder.objects.Vendedor;
 import bl.entities.composite.base.iComponente;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.Objects;
 public class Proforma extends iComponente{
     private Cliente cliente;
     private Vendedor vendedor;
+    private Nave nave;
     private String estado;
     private ArrayList<iComponente> listaDetalles; //Contiene detalles de la proforma
 
@@ -25,12 +27,14 @@ public class Proforma extends iComponente{
      * @param id es de tipo int y corresponde al id de la proforma
      * @param cliente es de tipo Cliente y corresponde al cliente
      * @param vendedor es de tipo Vendedor y corresponde al vendedor
+     * @param nave es de tipo Nave y corresponde a la nave
      * @param estado es de tipo String y corresponde al estado de la proforma
      */
-    public Proforma(int id, Cliente cliente, Vendedor vendedor, String estado) {
+    public Proforma(int id, Cliente cliente, Vendedor vendedor, Nave nave, String estado) {
         super(id);
         this.cliente = cliente;
         this.vendedor = vendedor;
+        this.nave = nave;
         this.estado = estado;
         this.listaDetalles = new ArrayList<iComponente>();
     }
@@ -39,11 +43,13 @@ public class Proforma extends iComponente{
      * Constructor con todos los atributos excepto el id de la proforma
      * @param cliente es de tipo Cliente y corresponde al cliente
      * @param vendedor es de tipo Vendedor y corresponde al vendedor
+     * @param nave es de tipo Nave y corresponde a la nave
      * @param estado es de tipo String y corresponde al estado de la proforma
      */
-    public Proforma(Cliente cliente, Vendedor vendedor, String estado) {
+    public Proforma(Cliente cliente, Vendedor vendedor, Nave nave, String estado) {
         this.cliente = cliente;
         this.vendedor = vendedor;
+        this.nave = nave;
         this.estado = estado;
         this.listaDetalles = new ArrayList<iComponente>();
     }
@@ -66,7 +72,12 @@ public class Proforma extends iComponente{
     public void setVendedor(Vendedor vendedor) {
         this.vendedor = vendedor;
     }
-
+    public Nave getNave() {
+        return nave;
+    }
+    public void setNave(Nave nave) {
+        this.nave = nave;
+    }
     public String getEstado() { return estado; }
 
     public void setEstado(String estado) { this.estado = estado; }

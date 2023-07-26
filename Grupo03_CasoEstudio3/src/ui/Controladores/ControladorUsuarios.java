@@ -1,18 +1,17 @@
 package ui.Controladores;
 
 import bl.entities.builder.gestor.GestorBuilder;
-import bl.entities.builder.objects.Cliente;
 import bl.entities.builder.objects.Usuario;
-import bl.entities.builder.objects.Vendedor;
-import bl.entities.composite.gestor.CompositeGestor;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
+
+import java.util.ArrayList;
 
 /**
  * @author Carolina Arias

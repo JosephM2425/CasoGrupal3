@@ -14,7 +14,9 @@
             <Tab text="Adición de repuestos a proforma">
                 <fx:include source="agregarRepuestosAProforma.fxml" />
             </Tab>
-          <Tab text="Revisión de proformas" />
+          <Tab text="Revisión de proformas" >
+            <fx:include source="gestionProformas.fxml" />
+          </Tab>
         </tabs>
       </TabPane>
    </children>

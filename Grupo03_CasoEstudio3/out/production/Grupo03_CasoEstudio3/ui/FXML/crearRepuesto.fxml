@@ -32,10 +32,11 @@
       <TableView fx:id="listaRepuestos" layoutX="72.0" layoutY="267.0" prefHeight="217.0" prefWidth="650.0">
          <columns>
             <TableColumn fx:id="tNombre" prefWidth="180.0" text="Nombre" />
-            <TableColumn fx:id="tTipo" prefWidth="95.0" text="Tipo" />
-            <TableColumn fx:id="tCategoria" prefWidth="110.0" text="Categoría" />
-            <TableColumn fx:id="tMarca" prefWidth="147.0" text="Marca" />
-            <TableColumn fx:id="tPrecio" prefWidth="116.0" text="Precio" />
+            <TableColumn fx:id="tDescripcion" prefWidth="215.1999969482422" text="Descripción" />
+            <TableColumn fx:id="tTipo" prefWidth="107.199951171875" text="Tipo" />
+            <TableColumn fx:id="tCategoria" prefWidth="128.7999267578125" text="Categoría" />
+            <TableColumn fx:id="tMarca" prefWidth="119.2001953125" text="Marca" />
+            <TableColumn fx:id="tPrecio" prefWidth="100.0" text="Precio" />
          </columns>
       </TableView>
       <ComboBox fx:id="categoriaCB" layoutX="221.0" layoutY="160.0" prefHeight="25.0" prefWidth="176.0" promptText="Categoría" />

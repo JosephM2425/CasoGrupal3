@@ -29,7 +29,7 @@
                   <Font name="Arial Black" size="20.0" />
                </font>
             </Text>
-            <ComboBox fx:id="proformaCB" layoutX="152.0" layoutY="81.0" prefHeight="26.0" prefWidth="566.0" />
+            <ComboBox fx:id="proformaCB" layoutX="152.0" layoutY="81.0" prefHeight="26.0" prefWidth="428.0" />
             <Label layoutX="83.0" layoutY="86.0" text="Proforma: *" />
             <TableView fx:id="listaDetalles" layoutX="47.0" layoutY="359.0" prefHeight="136.0" prefWidth="706.0">
                <columns>
@@ -40,6 +40,7 @@
                </columns>
             </TableView>
             <Button layoutX="374.0" layoutY="303.0" mnemonicParsing="false" text="Añadir" />
+            <Button layoutX="604.0" layoutY="82.0" mnemonicParsing="false" onAction="#actualizarProformas" text="Actualizar proformas" />
          </children>
       </Pane>
    </children>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="580.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TabPane prefHeight="580.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Creación de proformas">
+              <fx:include source="crearProforma.fxml" />
+          </Tab>
+            <Tab text="Adición de repuestos a proforma">
+                <fx:include source="agregarRepuestosAProforma.fxml" />
+            </Tab>
+          <Tab text="Revisión de proformas" />
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

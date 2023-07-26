@@ -1,10 +1,16 @@
 package bl.entities.builder.directores;
 
+import bl.DAO.UsuarioDAO;
 import bl.entities.builder.builders.UsuarioAbstractBuilder;
+import bl.entities.builder.objects.Usuario;
+
+import java.util.ArrayList;
 
 public class Director {
     //Atributos
     private UsuarioAbstractBuilder builder;
+    private UsuarioDAO usuarioDAO = new UsuarioDAO();
+
 
     //Constructor
     public Director() {}

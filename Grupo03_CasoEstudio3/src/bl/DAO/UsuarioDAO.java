@@ -130,4 +130,50 @@ public class UsuarioDAO {
         return usuario;
     }
 
+    /**
+     * Metodo para listar los usuarios de un tipo especifico
+     * @return un ArrayList con los usuarios
+     */
+    public ArrayList<Usuario> listarUsuarios(int tipo)
+    {
+        ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+        try {
+            Conexion con = new Conexion();
+            String query = "SELECT * FROM hni_usuarios WHERE id_rol = " + tipo;
+            Statement stmt = null;
+            ResultSet rs = null;
+            Connection conn = con.getConnection();
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                int rol = rs.getInt("ID_ROL");
+
+                Usuario usuario = null;
+                switch (rol) {
+                    case 1:
+                        usuario = new Cliente();
+                        break;
+                    case 2:
+                        usuario = new Vendedor();
+                        break;
+                }
+
+                usuario.setId(rs.getInt("ID_USUARIO"));
+                usuario.setRol(rol == 1 ? "Cliente" : "Vendedor");
+                usuario.setNombre(rs.getString("NOMBRE"));
+                usuario.setApellido1(rs.getString("APELLIDO1"));
+                usuario.setApellido2(rs.getString("APELLIDO2"));
+                usuario.setNumeroTelefonico(rs.getString("TELEFONO"));
+                usuarios.add(usuario);
+
+                con.Desconectar();
+            }
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return usuarios;
+    }
+
 }

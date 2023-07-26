@@ -1,5 +1,7 @@
 package ui.Controladores;
 
+import bl.entities.builder.gestor.GestorBuilder;
+import bl.entities.builder.objects.MarcaModeloNave;
 import bl.entities.composite.components.Proforma;
 import bl.entities.factory.concrete_Creator.Fabrica_Repuestos;
 import bl.entities.factory.objects.MarcaRepuesto;
@@ -35,14 +37,18 @@ public class ControladorRepuestos {
     public TextField nombreTF;
     public TextField descripcionTF;
     public TextField precioTF;
+    public ObservableList<TipoRepuesto> observableTiposRepuesto;
+    public ObservableList<MarcaRepuesto> observableMarcasRepuesto;
+    public ObservableList<MarcaModeloNave> observableMarcaModeloNave;
     public ComboBox<TipoRepuesto> tipoRepuestoCB;
     public ComboBox<MarcaRepuesto> marcaRepuestoCB;
+    public ComboBox<MarcaModeloNave> compatibilidadCB;
     public ComboBox<String> categoriaCB;
 
     private final Fabrica_Repuestos fabric = new Fabrica_Repuestos();
-    public ObservableList<TipoRepuesto> observableTiposRepuesto;
-    public ObservableList<MarcaRepuesto> observableMarcasRepuesto;
+
     private GestorFactory gestorFactory = new GestorFactory();
+    private GestorBuilder gestorBuilder = new GestorBuilder();
 
 
     /**
@@ -103,6 +109,45 @@ public class ControladorRepuestos {
     }
 
     /**
+     * Metodo para actualizar los ComboBoxes
+     */
+    public void cargarCompatibilidadCB(MarcaRepuesto marca) {
+        try {
+            observableMarcaModeloNave = FXCollections.observableArrayList(gestorBuilder.listarMarcaModelos(marca.getIdMarcaRepuesto()));
+            compatibilidadCB.setItems(observableMarcaModeloNave);
+
+
+            Callback<ListView<MarcaModeloNave>, ListCell<MarcaModeloNave>> cellFactory = new Callback<>() {
+                @Override
+                public ListCell<MarcaModeloNave> call(ListView<MarcaModeloNave> l) {
+                    return new ListCell<>() {
+                        @Override
+                        protected void updateItem(MarcaModeloNave item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (item == null || empty) {
+                                setGraphic(null);
+                            } else {
+                                setText("Marca: " + item.getMarca().getNombreMarca() + " | Modelo: " + item.getModelo().getNombreModelo());
+                            }
+                        }
+                    };
+                }
+            };
+
+            compatibilidadCB.setButtonCell(cellFactory.call(null));
+            compatibilidadCB.setCellFactory(cellFactory);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void seleccionarMarca(ActionEvent actionEvent) {
+        if(marcaRepuestoCB.getValue() != null) {
+            cargarCompatibilidadCB(marcaRepuestoCB.getValue());
+        }
+    }
+
+    /**
      * Metodo para resetear los valores del formulario
      */
     public void resetearValores() {
@@ -112,16 +157,17 @@ public class ControladorRepuestos {
         tipoRepuestoCB.setValue(null);
         marcaRepuestoCB.setValue(null);
         categoriaCB.setValue(null);
+        compatibilidadCB.setValue(null);
     }
 
     public void registrarRepuesto(ActionEvent actionEvent) {
         try {
-            if(nombreTF.getText().isEmpty()|| descripcionTF.getText().isEmpty() || categoriaCB.getValue() == null || precioTF.getText().isEmpty() || tipoRepuestoCB.getValue() == null || marcaRepuestoCB.getValue() == null){
+            if(nombreTF.getText().isEmpty()|| descripcionTF.getText().isEmpty() || categoriaCB.getValue() == null || precioTF.getText().isEmpty() || tipoRepuestoCB.getValue() == null || marcaRepuestoCB.getValue() == null || compatibilidadCB.getValue() == null){
                 mostrarAlerta(Alert.AlertType.ERROR, "Hay campos obligatorios sin llenar", "Hay campos obligatorios sin llenar.\nPor favor llene todos los campos obligatorios.");
             } else {
                 GestorFactory gestorFactory = new GestorFactory();
                 Repuesto repuesto = fabric.crearRepuesto(tipoRepuestoCB.getValue(), nombreTF.getText(), descripcionTF.getText(), categoriaCB.getValue(), Float.parseFloat(precioTF.getText()), marcaRepuestoCB.getValue());
-                gestorFactory.insertarRepuesto(repuesto);
+                gestorFactory.insertarRepuesto(repuesto, compatibilidadCB.getValue());
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Repuesto creado!", "El repuesto ha sido creado exitosamente");
                 resetearValores();
                 cargarListaRepuestos();
@@ -164,17 +210,15 @@ public class ControladorRepuestos {
         alert.show();
     }
 
+    public void actualizarListas(ActionEvent actionEvent) {
+        resetearValores();
+       cargarComboBoxes();
+    }
+
+
+
     public void initialize() {
         cargarComboBoxes();
         cargarListaRepuestos();
-    }
-
-    public void resetearValores(){
-        nombreTF.setText("");
-        descripcionTF.setText("");
-        precioTF.setText("");
-        tipoRepuestoCB.setValue(null);
-        marcaRepuestoCB.setValue(null);
-        categoriaCB.setValue(null);
     }
 }

@@ -226,4 +226,9 @@ public class GestorBuilder {
             return 1;
         }
     }
+
+    public ArrayList<MarcaModeloNave> listarMarcaModelos(int idMarca) {
+        ArrayList<MarcaModeloNave> marcaModelosNave = marcaModeloNaveDAO.listarMarcaModelos(idMarca);
+        return marcaModelosNave;
+    }
 }

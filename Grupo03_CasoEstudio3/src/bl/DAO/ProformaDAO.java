@@ -17,6 +17,7 @@ import bl.entities.composite.components.Proforma;
 public class ProformaDAO {
     private UsuarioDAO _usuarioDAO = new UsuarioDAO();
     private DetalleDAO _detalleDAO = new DetalleDAO();
+    private NaveDAO _naveDAO = new NaveDAO();
     /**
      * Metodo para registrar un proforma
      * @param proforma es de tipo Proforma y corresponde al proforma por registrar
@@ -27,12 +28,13 @@ public class ProformaDAO {
             Conexion con = new Conexion();
             Connection conn = con.getConnection();
             PreparedStatement stmt = null;
-            String query = "INSERT INTO hni_proformas (id_Cliente, id_Vendedor, estado) VALUES (?, ?, ?)";
+            String query = "INSERT INTO hni_proformas (id_Cliente, id_Vendedor, estado, id_Nave) VALUES (?, ?, ?, ?)";
 
             stmt = conn.prepareStatement(query);
             stmt.setInt(1,proforma.getCliente().getId());
             stmt.setInt(2,proforma.getVendedor().getId());
             stmt.setString(3,proforma.getEstado());
+            stmt.setInt(4,proforma.getNave().getIdNave());
             stmt.execute();
 
             con.Desconectar();
@@ -73,6 +75,10 @@ public class ProformaDAO {
                 Usuario usuarioVendedor = _usuarioDAO.buscarUsuario(idVendedor);
                 Vendedor vendedor = (Vendedor) usuarioVendedor;
                 proforma.setVendedor(vendedor);
+
+                int idNave = rs.getInt("ID_NAVE");
+                Nave nave = _naveDAO.buscarNave(idNave);
+                proforma.setNave(nave);
 
                 proforma.setEstado(rs.getString("ESTADO"));
 

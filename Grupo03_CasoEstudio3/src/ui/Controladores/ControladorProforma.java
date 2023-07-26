@@ -1,12 +1,11 @@
 package ui.Controladores;
 
 import bl.entities.builder.gestor.GestorBuilder;
-import bl.entities.builder.objects.Cliente;
-import bl.entities.builder.objects.Usuario;
-import bl.entities.builder.objects.Vendedor;
+import bl.entities.builder.objects.*;
 import bl.entities.composite.base.iComponente;
 import bl.entities.composite.components.Proforma;
 import bl.entities.composite.gestor.CompositeGestor;
+import bl.entities.factory.objects.MarcaRepuesto;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,15 +35,20 @@ public class ControladorProforma {
     @FXML
     TableColumn<Proforma,String> tVendedor;
     @FXML
+    TableColumn<Proforma,String> tNave;
+    @FXML
     TableColumn<Proforma,String> tEstado;
     @FXML
     public ObservableList<Proforma> observableProformas;
     public ComboBox<Usuario> clienteCB;
     public ComboBox<Usuario> vendedorCB;
+    public ComboBox<Nave> navesCB;
     @FXML
     public ObservableList<Usuario> observableClientes;
     @FXML
     public ObservableList<Usuario> observableVendedores;
+    @FXML
+    public ObservableList<Nave> observableNaves;
     private GestorBuilder gestorBuilder = new GestorBuilder();
     private CompositeGestor gestorComposite = new CompositeGestor();
 
@@ -125,10 +129,10 @@ public class ControladorProforma {
      */
     public void registrarProforma(ActionEvent actionEvent) {
         try {
-            if (clienteCB.getValue() == null || vendedorCB.getValue() == null) {
+            if (clienteCB.getValue() == null || vendedorCB.getValue() == null || navesCB.getValue() == null) {
                 mostrarAlerta(Alert.AlertType.ERROR, "Hay campos obligatorios sin llenar", "Hay campos obligatorios sin llenar.\nPor favor llene todos los campos obligatorios.");
             } else {
-                int resultado = gestorComposite.nuevaProforma((Cliente) clienteCB.getValue(), (Vendedor) vendedorCB.getValue(), "Pendiente");
+                int resultado = gestorComposite.nuevaProforma((Cliente) clienteCB.getValue(), (Vendedor) vendedorCB.getValue(), navesCB.getValue(), "Pendiente");
                 if(resultado == 0) {
                     mostrarAlerta(Alert.AlertType.INFORMATION, "Registro de proforma exitoso", "La proforma se ha registrado correctamente.");
                     resetearValores();
@@ -155,11 +159,50 @@ public class ControladorProforma {
             tNoProforma.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId() + ""));
             tCliente.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCliente().getNombre() + " " + cellData.getValue().getCliente().getApellido1() + " " + cellData.getValue().getCliente().getApellido2()));
             tVendedor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getVendedor().getNombre() + " " + cellData.getValue().getVendedor().getApellido1() + " " + cellData.getValue().getVendedor().getApellido2()));
+            tNave.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNave().getMarcaModeloNave().getMarca().getNombreMarca() + " " + cellData.getValue().getNave().getMarcaModeloNave().getModelo().getNombreModelo() + " | Año: " + cellData.getValue().getNave().getMarcaModeloNave().getAnio() + " | Código: " + cellData.getValue().getNave().getCodigoIdentificacion()));
             tEstado.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEstado() + ""));
             listaProformas.setItems(observableProformas);
             cargarComboBoxes();
         } catch (Exception e){
             mostrarAlerta(Alert.AlertType.ERROR,"Error.","Ha ocurrido un error, por favor inténtelo de nuevo.");
+        }
+    }
+
+    /**
+     * Metodo para actualizar los ComboBoxes
+     */
+    public void cargarNavesCB(Usuario usuario) {
+        try {
+            observableNaves = FXCollections.observableArrayList(gestorBuilder.listarNaves(clienteCB.getValue().getId()));
+            navesCB.setItems(observableNaves);
+
+            Callback<ListView<Nave>, ListCell<Nave>> cellFactory = new Callback<>() {
+                @Override
+                public ListCell<Nave> call(ListView<Nave> l) {
+                    return new ListCell<>() {
+                        @Override
+                        protected void updateItem(Nave item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (item == null || empty) {
+                                setGraphic(null);
+                            } else {
+                                setText(item.getMarcaModeloNave().getMarca().getNombreMarca() + " " + item.getMarcaModeloNave().getModelo().getNombreModelo() + " | Año: " + item.getMarcaModeloNave().getAnio() + " | Código: " + item.getCodigoIdentificacion());
+                            }
+                        }
+                    };
+                }
+            };
+
+            navesCB.setButtonCell(cellFactory.call(null));
+            navesCB.setCellFactory(cellFactory);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void seleccionarCliente(ActionEvent actionEvent) {
+        if(clienteCB.getValue() != null) {
+            cargarNavesCB(clienteCB.getValue());
         }
     }
 }

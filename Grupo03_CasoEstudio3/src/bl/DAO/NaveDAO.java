@@ -1,6 +1,7 @@
 package bl.DAO;
 
 import bl.config.Conexion;
+import bl.entities.builder.objects.MarcaNave;
 import bl.entities.builder.objects.Nave;
 import bl.entities.builder.objects.Usuario;
 
@@ -82,6 +83,31 @@ public class NaveDAO {
             e.printStackTrace();
         }
         return naves;
+    }
+
+    public Nave buscarNave(int idNave){
+        Nave nave = new Nave();
+        try {
+            Conexion con = new Conexion();
+            String query = "SELECT * FROM HnI_naves WHERE id_nave = " + idNave;
+            Statement stmt = null;
+            ResultSet rs = null;
+            Connection conn = con.getConnection();
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                nave.setUsuario(usuarioDAO.buscarUsuario(rs.getInt("id_usuario")));
+                nave.setCategoriaNave(categoriaNaveDAO.buscarCategoriaNave(rs.getInt("id_Categoria")));
+                nave.setMarcaModeloNave(marcaModeloNaveDAO.buscarMarcaModeloNave(rs.getInt("id_MarcaModelo")));
+                nave.setCodigoIdentificacion(rs.getString("codigo_identificacion"));
+                nave.setColor(rs.getString("color"));
+            }
+            conn.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nave;
     }
 
 }

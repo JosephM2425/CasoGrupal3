@@ -1,6 +1,7 @@
 package bl.DAO;
 
 import bl.config.Conexion;
+import bl.entities.builder.objects.MarcaModeloNave;
 import bl.entities.factory.concrete_Creator.Fabrica_Repuestos;
 import bl.entities.factory.objects.*;
 import bl.entities.factory.creator.Metodo_Fabrica_Abstracta;
@@ -11,7 +12,8 @@ import bl.config.Configuracion;
 
 public class RepuestoDAO {
     private Fabrica_Repuestos gFabrica = new Fabrica_Repuestos();
-    public void insertarRepuesto(Repuesto tmpRepuesto) {
+    private MarcaModeloNaveDAO marcaModeloNaveDAO = new MarcaModeloNaveDAO();
+    public void insertarRepuesto(Repuesto tmpRepuesto, MarcaModeloNave marcaModeloNave) {
         try {
             Conexion con = new Conexion();
             Connection conn = con.getConnection();
@@ -25,6 +27,15 @@ public class RepuestoDAO {
             stmt.setFloat(5, tmpRepuesto.getPrecio());
             stmt.setInt(6, tmpRepuesto.getMarcaRepuesto().getIdMarcaRepuesto());
             stmt.execute();
+
+            PreparedStatement stmt1 = null;
+            String query1 = "INSERT INTO HnI_Compatibilidad (id_MarcaModelo, id_Repuesto) VALUES(?,?)";
+            stmt1 = conn.prepareStatement(query1);
+            stmt1.setInt(1, marcaModeloNave.getIdMarcaModeloNave());
+            stmt1.setInt(2, tmpRepuesto.getId_Repuesto());
+            stmt1.execute();
+
+            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -47,6 +58,26 @@ public class RepuestoDAO {
         }
         return repuestos;
     }
+
+    public ArrayList<Repuesto> listarRepuestosCompatibles(int idMarcaModelo){
+        ArrayList<Repuesto> repuestos = new ArrayList<>();
+        try {
+            Conexion con = new Conexion();
+            String query = "Select r.id_Repuesto, t.idTipoRepuesto, t.Tipo, r.nombre,r.descripcion,r.categoria,r.precio,m.idMarcaRespuesto,m.Marca from HnI_Repuestos AS r INNER JOIN HnI_MarcaRespuesto AS m ON R.id_MarcaRespuesto=M.idMarcaRespuesto INNER JOIN HnI_TipoRepuesto AS t ON R.id_TipoRepuesto=T.idTipoRepuesto INNER JOIN HnI_compatibilidad AS c ON r.id_repuesto=c.id_repuesto WHERE id_MarcaModelo= " + idMarcaModelo;
+            Statement stmt = null;
+            ResultSet rs = null;
+            Connection conn = con.getConnection();
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                repuestos.add(listaRepuestos(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return repuestos;
+    }
+
     public void actualizarRepuesto(Repuesto tmpRepuesto){
         try {
             Conexion con = new Conexion();

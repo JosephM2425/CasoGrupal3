@@ -54,6 +54,33 @@ public class MarcaModeloNaveDAO {
         return marcaModelosNave;
     }
 
+    public ArrayList<MarcaModeloNave> listarMarcaModelos(int idMarca) {
+        ArrayList<MarcaModeloNave> marcaModelosNave = new ArrayList<>();
+        try {
+            Conexion con = new Conexion();
+            String query = "SELECT * FROM HnI_MarcaModelo WHERE id_Marca = " + idMarca;
+            Statement stmt = null;
+            ResultSet rs = null;
+            Connection conn = con.getConnection();
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                MarcaNave tmpMarcaNave = marcaNaveDAO.buscarMarcaNave(rs.getInt("id_Marca"));
+                ModeloNave tmpModeloNave = modeloNaveDAO.buscarModeloNave(rs.getInt("id_Modelo"));
+                MarcaModeloNave tmpMarcaModeloNave = new MarcaModeloNave();
+                tmpMarcaModeloNave.setMarca(tmpMarcaNave);
+                tmpMarcaModeloNave.setModelo(tmpModeloNave);
+                tmpMarcaModeloNave.setIdMarcaModeloNave(rs.getInt("id_MarcaModelo"));
+                tmpMarcaModeloNave.setAnio(rs.getInt("annno"));
+                marcaModelosNave.add(tmpMarcaModeloNave);
+            }
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return marcaModelosNave;
+    }
+
     public MarcaModeloNave buscarMarcaModeloNave(int idMarcaModelo){
         MarcaModeloNave marcaModeloNave = new MarcaModeloNave();
         try {

@@ -6,7 +6,7 @@ public class Motor extends Repuesto{
     public Motor(int id_Repuesto, TipoRepuesto tipoRepuesto, String nombre, String descripcion, String categoria, float precio, MarcaRepuesto marcaRepuesto) {
         setId_Repuesto(id_Repuesto);
         setTipoRepuesto(tipoRepuesto);
-        setNombre("Motor "+ marcaRepuesto.getMarca() + " " + nombre);
+        setNombre(nombre);
         setDescripcion(descripcion);
         setCategoria(categoria);
         setPrecio(precio);

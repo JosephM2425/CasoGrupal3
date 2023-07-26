@@ -1,6 +1,7 @@
 package bl.entities.factory.gestor;
 
 import bl.DAO.*;
+import bl.entities.builder.objects.MarcaModeloNave;
 import bl.entities.factory.objects.MarcaRepuesto;
 import bl.entities.factory.objects.TipoRepuesto;
 import bl.entities.factory.product.Repuesto;
@@ -25,8 +26,8 @@ public class GestorFactory {
     public void insertarTipoRepuesto(TipoRepuesto tipoRepuesto){
         tipoRepuestoDAO.insertarTipoRepuesto(tipoRepuesto);
     }
-    public void insertarRepuesto(Repuesto repuesto){
-        repuestoDAO.insertarRepuesto(repuesto);
+    public void insertarRepuesto(Repuesto repuesto, MarcaModeloNave marcaModeloNave){
+        repuestoDAO.insertarRepuesto(repuesto, marcaModeloNave);
     }
 
     public ArrayList<MarcaRepuesto>listarMarcasRepuesto(){
@@ -37,6 +38,9 @@ public class GestorFactory {
     }
     public ArrayList<Repuesto>listarRepuestos(){
         return repuestoDAO.listarRepuestos();
+    }
+    public ArrayList<Repuesto>listarRepuestosCompatibles(int idMarcaModeloNave){
+        return repuestoDAO.listarRepuestosCompatibles(idMarcaModeloNave);
     }
 
     public void actualizarMarcaRepuesto(MarcaRepuesto marcaRepuesto){

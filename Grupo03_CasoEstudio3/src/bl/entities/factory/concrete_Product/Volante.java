@@ -6,7 +6,7 @@ public class Volante extends Repuesto{
     public Volante(int id_Repuesto, TipoRepuesto tipoRepuesto,  String nombre, String descripcion, String categoria, float precio, MarcaRepuesto marcaRepuesto) {
         setId_Repuesto(id_Repuesto);
         setTipoRepuesto(tipoRepuesto);
-        setNombre("Volante " + marcaRepuesto.getMarca() + " " + nombre);
+        setNombre(nombre);
         setDescripcion(descripcion);
         setCategoria(categoria);
         setPrecio(precio);

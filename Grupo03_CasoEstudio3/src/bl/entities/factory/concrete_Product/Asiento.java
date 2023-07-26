@@ -6,7 +6,7 @@ public class Asiento extends Repuesto{
     public Asiento(int id_Repuesto, TipoRepuesto tipoRepuesto,  String nombre, String descripcion, String categoria, float precio, MarcaRepuesto marcaRepuesto) {
         setId_Repuesto(id_Repuesto);
         setTipoRepuesto(tipoRepuesto);
-        setNombre("Asiento " + marcaRepuesto.getMarca() + " " + nombre);
+        setNombre(nombre);
         setDescripcion(descripcion);
         setCategoria(categoria);
         setPrecio(precio);

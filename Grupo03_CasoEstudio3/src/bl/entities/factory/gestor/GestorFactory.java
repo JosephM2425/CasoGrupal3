@@ -29,7 +29,6 @@ public class GestorFactory {
         repuestoDAO.insertarRepuesto(repuesto);
     }
 
-
     public ArrayList<MarcaRepuesto>listarMarcasRepuesto(){
         return marcaRepuestoDAO.listarMarcas();
     }

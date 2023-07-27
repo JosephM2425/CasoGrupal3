@@ -2,6 +2,7 @@ package bl.DAO;
 
 import bl.config.Conexion;
 import bl.entities.builder.objects.MarcaModeloNave;
+import bl.entities.builder.objects.MarcaNave;
 import bl.entities.factory.concrete_Creator.Fabrica_Repuestos;
 import bl.entities.factory.objects.*;
 import bl.entities.factory.creator.Metodo_Fabrica_Abstracta;
@@ -114,22 +115,26 @@ public class RepuestoDAO {
         }
     }
 
-    public Repuesto buscarRepuesto(int tmpRepuesto){
-
+    public Repuesto buscarRepuesto(int idRepuesto){
+        Repuesto repuesto = null;
         try {
             Conexion con = new Conexion();
-            String query = "Select r.id_Repuesto, t.idTipoRepuesto, t.Tipo, r.nombre,r.descripcion,r.categoria,r.precio,m.idMarcaRespuesto,m.Marca from HnI_Repuestos AS r INNER JOIN HnI_MarcaRespuesto AS m ON R.id_MarcaRespuesto=M.idMarcaRespuesto INNER JOIN HnI_TipoRepuesto AS t ON R.id_TipoRepuesto=T.idTipoRepuesto\" WHERE r.id_Repuesto = ?";
-            PreparedStatement stmt;
+            String query = "Select r.id_Repuesto, t.idTipoRepuesto, t.Tipo, r.nombre,r.descripcion,r.categoria,r.precio,m.idMarcaRespuesto,m.Marca from HnI_Repuestos AS r INNER JOIN HnI_MarcaRespuesto AS m ON R.id_MarcaRespuesto=M.idMarcaRespuesto INNER JOIN HnI_TipoRepuesto AS t ON R.id_TipoRepuesto=T.idTipoRepuesto WHERE r.id_Repuesto = " + idRepuesto + ";";
+            Statement stmt = null;
             ResultSet rs = null;
             Connection conn = con.getConnection();
-            stmt = conn.prepareStatement(query);
-            stmt.setInt(1, tmpRepuesto);
-            rs = stmt.executeQuery();
-            return listaRepuestos(rs);
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                repuesto = listaRepuestos(rs);
+            }
+            conn.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return repuesto;
     }
 
     private Repuesto listaRepuestos( ResultSet rs) throws SQLException {

@@ -9,6 +9,7 @@ import bl.entities.builder.objects.Vendedor;
 import bl.entities.composite.base.iComponente;
 import bl.entities.composite.components.Detalle;
 import bl.entities.composite.components.Proforma;
+import bl.entities.factory.product.Repuesto;
 
 import java.util.ArrayList;
 
@@ -37,11 +38,16 @@ public class CompositeGestor {
         }
     }
 
-    public void nuevoDetalle(int idProforma, int idRepuesto, String estado) {
-        iComponente temp = null;
-        temp = new Detalle(idProforma, idRepuesto, estado);
-        agregarDetalleProforma(temp.getId(), idProforma);
-        _DetalleDAO.registrarDetalle((Detalle)temp);
+    public int nuevoDetalle(int idProforma, Repuesto repuesto, String estado) {
+        try {
+            iComponente temp = null;
+            temp = new Detalle(idProforma, repuesto, estado);
+            agregarDetalleProforma(temp.getId(), idProforma);
+            _DetalleDAO.registrarDetalle((Detalle) temp);
+            return 0;
+        } catch (Exception e) {
+            return 1;
+        }
     }
 
     public void agregarDetalleProforma(int idDetalle, int idProforma) {
@@ -95,6 +101,15 @@ public class CompositeGestor {
     public ArrayList<Detalle> obtenerDetalles() {
         ArrayList<Detalle> tempArr = new ArrayList<Detalle>();
         ArrayList<iComponente> tempArr2 = obtenerComponentes(2);
+        for (iComponente item : tempArr2) {
+            tempArr.add((Detalle) item);
+        }
+        return tempArr;
+    }
+
+    public ArrayList<Detalle> obtenerDetalles(int idProforma) {
+        ArrayList<Detalle> tempArr = new ArrayList<Detalle>();
+        ArrayList<iComponente> tempArr2 = _DetalleDAO.listarDetalles(idProforma);
         for (iComponente item : tempArr2) {
             tempArr.add((Detalle) item);
         }

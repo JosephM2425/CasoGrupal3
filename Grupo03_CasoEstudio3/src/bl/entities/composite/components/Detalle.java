@@ -1,13 +1,14 @@
 package bl.entities.composite.components;
 
 import bl.entities.composite.base.iComponente;
+import bl.entities.factory.product.Repuesto;
 
 import java.util.Objects;
 
 public class Detalle extends iComponente{
     //Atributos
     private int idProforma;
-    private int idRepuesto;
+    private Repuesto repuesto;
     private int idRazonRechazo;
     private String estado;
 
@@ -22,14 +23,14 @@ public class Detalle extends iComponente{
      * Constructor con todos los atributos
      * @param id es de tipo int y corresponde al id del detalle de la proforma
      * @param idProforma es de tipo int y corresponde al id de la proforma
-     * @param idRepuesto es de tipo int y corresponde al id del repuesto
+     * @param repuesto es de tipo Repuesto y corresponde al repuesto
      * @param idRazonRechazo es de tipo int y corresponde al id de la razon de rechazo
      * @param estado es de tipo String y corresponde al estado del detalle de la proforma
      */
-    public Detalle(int id, int idProforma, int idRepuesto, int idRazonRechazo, String estado) {
+    public Detalle(int id, int idProforma, Repuesto repuesto, int idRazonRechazo, String estado) {
         super(id);
         this.idProforma = idProforma;
-        this.idRepuesto = idRepuesto;
+        this.repuesto = repuesto;
         this.idRazonRechazo = idRazonRechazo;
         this.estado = estado;
     }
@@ -38,25 +39,25 @@ public class Detalle extends iComponente{
      * Constructor con todos los atributos excepto el id de la razon de rechazo
      * @param id es de tipo int y corresponde al id del detalle de la proforma
      * @param idProforma es de tipo int y corresponde al id de la proforma
-     * @param idRepuesto es de tipo int y corresponde al id del repuesto
+     * @param repuesto es de tipo Repuesto y corresponde al repuesto
      * @param estado es de tipo String y corresponde al estado del detalle de la proforma
      */
-    public Detalle(int id, int idProforma, int idRepuesto, String estado) {
+    public Detalle(int id, int idProforma, Repuesto repuesto, String estado) {
         super(id);
         this.idProforma = idProforma;
-        this.idRepuesto = idRepuesto;
+        this.repuesto = repuesto;
         this.estado = estado;
     }
 
     /**
      * Constructor con todos los atributos excepto el id del detalle de la proforma y el id de la razon de rechazo
      * @param idProforma es de tipo int y corresponde al id de la proforma
-     * @param idRepuesto es de tipo int y corresponde al id del repuesto
+     * @param repuesto es de tipo Repuesto y corresponde al repuesto
      * @param estado es de tipo String y corresponde al estado del detalle de la proforma
      */
-    public Detalle(int idProforma, int idRepuesto, String estado) {
+    public Detalle(int idProforma, Repuesto repuesto, String estado) {
         this.idProforma = idProforma;
-        this.idRepuesto = idRepuesto;
+        this.repuesto = repuesto;
         this.estado = estado;
     }
 
@@ -65,9 +66,13 @@ public class Detalle extends iComponente{
 
     public void setId_proforma(int idProforma) { this.idProforma = idProforma; }
 
-    public int getId_repuesto() { return idRepuesto; }
+    public Repuesto getRepuesto() {
+        return repuesto;
+    }
 
-    public void setId_repuesto(int idRepuesto) { this.idRepuesto = idRepuesto; }
+    public void setRepuesto(Repuesto repuesto) {
+        this.repuesto = repuesto;
+    }
 
     public int getId_razonRechazo() { return idRazonRechazo; }
 
@@ -87,7 +92,7 @@ public class Detalle extends iComponente{
     public String mostrarDatos() {
         return "Detalle #" + id +
                 ". Proforma #" + idProforma +
-                ". Repuesto #" + idRepuesto +
+                ". Repuesto #" + repuesto +
                 ". Razón de rechazo: " + idRazonRechazo +
                 ". Estado: " + estado + ".";
     }

@@ -1,9 +1,11 @@
 package ui.Controladores;
 
-import bl.entities.composite.base.iComponente;
+import bl.entities.builder.gestor.GestorBuilder;
+import bl.entities.builder.objects.Usuario;
 import bl.entities.composite.components.Proforma;
 import bl.entities.factory.gestor.GestorFactory;
 import bl.entities.factory.product.Repuesto;
+import bl.entities.proxy.UsuarioProxy;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
@@ -18,9 +20,6 @@ import bl.entities.composite.gestor.CompositeGestor;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -36,12 +35,17 @@ public class ControladorGestionProformas {
     public TableColumn<Repuesto, Integer> precio;
     public TableColumn razon;
     public TableColumn estado;
+    public ComboBox<Usuario> usuariosCB;
+    @FXML
+    public ObservableList<Usuario> observableUsuarios;
     private CompositeGestor gestorComposite = new CompositeGestor();
     @FXML
     public ObservableList<Repuesto> observableRepuestos;
     private GestorFactory gestorFactory = new GestorFactory();
     @FXML
     private Text textProformaEstado;
+    private GestorBuilder gestorBuilder = new GestorBuilder();
+
 
 
     @FXML
@@ -78,6 +82,30 @@ public class ControladorGestionProformas {
 
             proformasCB.setButtonCell(cellFactory.call(null));
             proformasCB.setCellFactory(cellFactory);
+
+            observableUsuarios = FXCollections.observableArrayList(gestorBuilder.listarUsuarios());
+            usuariosCB.setItems(observableUsuarios);
+
+            Callback<ListView<Usuario>, ListCell<Usuario>> cellFactory1 = new Callback<>() {
+
+                @Override
+                public ListCell<Usuario> call(ListView<Usuario> l) {
+                    return new ListCell<>() {
+                        @Override
+                        protected void updateItem(Usuario item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (item == null || empty) {
+                                setGraphic(null);
+                            } else {
+                                setText(item.getNombre() + " " + item.getApellido1() + " " + item.getApellido2());
+                            }
+                        }
+                    };
+                }
+            };
+
+            usuariosCB.setButtonCell(cellFactory1.call(null));
+            usuariosCB.setCellFactory(cellFactory1);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -118,5 +146,34 @@ public class ControladorGestionProformas {
     public void actualizarEstado(int id_proforma){
         Proforma proforma = gestorComposite.obtenerProformas().get(id_proforma);
         textProformaEstado.setText(proforma.getEstado());
+    }
+
+    public void guardarProforma(ActionEvent actionEvent) {
+        if(usuariosCB.getValue() != null) {
+            UsuarioProxy usuarioSesion = new UsuarioProxy();
+            usuarioSesion.setUsuario(usuariosCB.getValue());
+            if(!usuarioSesion.analizarRol()) {
+                mostrarAlerta(Alert.AlertType.ERROR, "Error", "No tiene permisos para realizar esta acción.");
+            } else {
+                mostrarAlerta(Alert.AlertType.INFORMATION, "Operación exitosa", "Se ha guardado la proforma con éxito");
+            }
+        } else {
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Debe seleccionar un usuario.");
+        }
+    }
+
+    public void actualizarListas(ActionEvent actionEvent) {
+        proformasCB.getItems().clear();
+        usuariosCB.getItems().clear();
+        tProformaRepuesto.getItems().clear();
+        cargarComboBoxes();
+    }
+
+    private void mostrarAlerta(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
     }
 }

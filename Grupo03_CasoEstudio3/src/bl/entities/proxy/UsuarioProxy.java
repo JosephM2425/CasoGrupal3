@@ -1,4 +1,4 @@
-package bl.Proxy;
+package bl.entities.proxy;
 
 import bl.entities.builder.objects.Usuario;
 
@@ -14,8 +14,8 @@ public class UsuarioProxy extends Usuario {
     }
 
     public boolean analizarRol() {
-        String rol = usuario.getRol();
-        if(rol == "Vendedor") {
+        String rol = this.usuario.getRol();
+        if(rol.equals("Vendedor")) {
             return true;
         } else {
             return false;

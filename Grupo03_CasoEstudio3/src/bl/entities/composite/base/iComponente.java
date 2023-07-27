@@ -2,8 +2,6 @@ package bl.entities.composite.base;
 
 public abstract class iComponente {
     //Atributos
-    public static final int PROFORMA = 0;
-    public static final int DETALLE = 1;
     protected int tipoNodo;
     protected int id;
 

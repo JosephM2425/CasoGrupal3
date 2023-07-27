@@ -30,7 +30,7 @@ public class DetalleDAO {
 
             stmt = conn.prepareStatement(query);
             stmt.setInt(1,detalle.getId_proforma());
-            stmt.setInt(2,detalle.getId_repuesto());
+            stmt.setInt(2,detalle.getRepuesto().getId_Repuesto());
             stmt.setString(3,detalle.getEstado());
             stmt.execute();
 
@@ -62,7 +62,7 @@ public class DetalleDAO {
                 Detalle detalle = new Detalle();
                 detalle.setId(rs.getInt("ID_DETALLE"));
                 detalle.setId_proforma(rs.getInt("ID_PROFORMA"));
-                detalle.setId_repuesto(rs.getInt("ID_REPUESTO"));
+                detalle.setRepuesto(new RepuestoDAO().buscarRepuesto(rs.getInt("ID_REPUESTO")));
                 detalle.setEstado(rs.getString("ESTADO"));
                 detalles.add(detalle);
 
@@ -95,7 +95,7 @@ public class DetalleDAO {
                 Detalle detalle = new Detalle();
                 detalle.setId(rs.getInt("ID_DETALLE"));
                 detalle.setId_proforma(rs.getInt("ID_PROFORMA"));
-                detalle.setId_repuesto(rs.getInt("ID_REPUESTO"));
+                detalle.setRepuesto(new RepuestoDAO().buscarRepuesto(rs.getInt("ID_REPUESTO")));
                 detalle.setEstado(rs.getString("ESTADO"));
                 detalles.add(detalle);
 

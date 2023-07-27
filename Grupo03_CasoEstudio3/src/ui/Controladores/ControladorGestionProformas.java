@@ -97,7 +97,7 @@ public class ControladorGestionProformas {
 
         for (Repuesto repuesto : observableRepuestos) {
             int id_repuesto_actual = repuesto.getId_Repuesto();
-            if (detalle_seleccionado.stream().anyMatch(detalle -> detalle.getId_repuesto() == id_repuesto_actual)) {
+            if (detalle_seleccionado.stream().anyMatch(detalle -> detalle.getRepuesto().getId_Repuesto() == id_repuesto_actual)) {
                 repuestosFiltrados.add(repuesto);
             }
         }

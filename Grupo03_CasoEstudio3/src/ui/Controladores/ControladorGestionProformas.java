@@ -6,12 +6,11 @@ import bl.entities.composite.components.Proforma;
 import bl.entities.factory.gestor.GestorFactory;
 import bl.entities.factory.product.Repuesto;
 import bl.entities.proxy.UsuarioProxy;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
@@ -20,6 +19,8 @@ import bl.entities.composite.gestor.CompositeGestor;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+
+import java.util.ArrayList;
 import java.util.Optional;
 
 
@@ -29,12 +30,12 @@ public class ControladorGestionProformas {
     public ComboBox<Proforma> proformasCB = new ComboBox<>();
     @FXML
     public ObservableList<Proforma> observableProformas;
-    public TableView tProformaRepuesto;
-    public TableColumn<Repuesto, String> nombre;
-    public TableColumn<Repuesto, String> descripcion;
-    public TableColumn<Repuesto, Integer> precio;
-    public TableColumn razon;
-    public TableColumn estado;
+    public TableView<Detalle> tProformaRepuesto;
+    public TableColumn<Detalle, String> nombre;
+    public TableColumn<Detalle, String> descripcion;
+    public TableColumn<Detalle, String> precio;
+    public TableColumn<Detalle, String> razon;
+    public TableColumn<Detalle, String> estado;
     public ComboBox<Usuario> usuariosCB;
     @FXML
     public ObservableList<Usuario> observableUsuarios;
@@ -118,29 +119,22 @@ public class ControladorGestionProformas {
     }
 
     public void cargarTablaDetalleProforma(int id_proforma) {
-        Optional<Proforma> proforma_seleccionada = observableProformas.filtered(proforma -> proforma.getId() == id_proforma)
-                .stream()
-                .findFirst();
-
-        observableDetalles = FXCollections.observableArrayList(gestorComposite.obtenerDetalles());
-
-        FilteredList<Detalle> detalle_seleccionado = observableDetalles.filtered(detalle -> detalle.getId_proforma() == proforma_seleccionada.get().getId());
-        observableRepuestos = FXCollections.observableArrayList(gestorFactory.listarRepuestos());
-        ObservableList<Repuesto> repuestosFiltrados = FXCollections.observableArrayList();
-
-        for (Repuesto repuesto : observableRepuestos) {
-            int id_repuesto_actual = repuesto.getId_Repuesto();
-            if (detalle_seleccionado.stream().anyMatch(detalle -> detalle.getRepuesto().getId_Repuesto() == id_repuesto_actual)) {
-                repuestosFiltrados.add(repuesto);
-            }
+        try {
+            tProformaRepuesto.getItems().clear();
+            tProformaRepuesto.setEditable(true);
+            observableDetalles = FXCollections.observableArrayList(gestorComposite.obtenerDetalles(id_proforma));
+            gestorComposite.obtenerDetalles(id_proforma).forEach(detalle -> observableDetalles.addAll(detalle));
+            observableDetalles = FXCollections.observableArrayList(gestorComposite.obtenerDetalles(id_proforma));
+            nombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRepuesto().getNombre()));
+            descripcion .setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRepuesto().getDescripcion()));
+            precio.setCellValueFactory(cellData -> new SimpleStringProperty("$" + cellData.getValue().getRepuesto().getPrecio() + ""));
+            razon.setCellFactory(TextFieldTableCell.forTableColumn());
+            estado.setCellFactory(TextFieldTableCell.forTableColumn());
+            tProformaRepuesto.setItems(observableDetalles);
+        } catch (Exception e){
+            e.printStackTrace();
         }
-        tProformaRepuesto.setEditable(true);
-        nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        descripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
-        precio.setCellValueFactory(new PropertyValueFactory<>("precio"));
-        razon.setCellFactory(TextFieldTableCell.forTableColumn());
-        estado.setCellFactory(TextFieldTableCell.forTableColumn());
-        tProformaRepuesto.setItems(repuestosFiltrados);
+        ;
     }
 
     public void actualizarEstado(int id_proforma){
@@ -155,6 +149,11 @@ public class ControladorGestionProformas {
             if(!usuarioSesion.analizarRol()) {
                 mostrarAlerta(Alert.AlertType.ERROR, "Error", "No tiene permisos para realizar esta acción.");
             } else {
+                ObservableList<Detalle> detallesObservable = tProformaRepuesto.getItems();
+                ArrayList<Detalle> detalles = new ArrayList<>(detallesObservable);
+                for (Detalle detalle : detalles) {
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Prueba.", detalle.getEstado());
+                }
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Operación exitosa", "Se ha guardado la proforma con éxito");
             }
         } else {

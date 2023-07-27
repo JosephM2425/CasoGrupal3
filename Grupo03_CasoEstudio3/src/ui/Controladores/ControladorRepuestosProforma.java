@@ -17,6 +17,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.Callback;
 
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 /**
  * @author Carolina Arias
  * @version 1.0

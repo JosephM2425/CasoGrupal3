@@ -9,7 +9,7 @@ public class Detalle extends iComponente{
     //Atributos
     private int idProforma;
     private Repuesto repuesto;
-    private int idRazonRechazo;
+    private RazonRechazo razonRechazo;
     private String estado;
 
     //Constructores
@@ -24,14 +24,14 @@ public class Detalle extends iComponente{
      * @param id es de tipo int y corresponde al id del detalle de la proforma
      * @param idProforma es de tipo int y corresponde al id de la proforma
      * @param repuesto es de tipo Repuesto y corresponde al repuesto
-     * @param idRazonRechazo es de tipo int y corresponde al id de la razon de rechazo
+     * @param razonRechazo es de tipo RazonRechazo y corresponde a la razon de rechazo
      * @param estado es de tipo String y corresponde al estado del detalle de la proforma
      */
-    public Detalle(int id, int idProforma, Repuesto repuesto, int idRazonRechazo, String estado) {
+    public Detalle(int id, int idProforma, Repuesto repuesto, RazonRechazo razonRechazo, String estado) {
         super(id);
         this.idProforma = idProforma;
         this.repuesto = repuesto;
-        this.idRazonRechazo = idRazonRechazo;
+        this.razonRechazo = razonRechazo;
         this.estado = estado;
     }
 
@@ -74,9 +74,13 @@ public class Detalle extends iComponente{
         this.repuesto = repuesto;
     }
 
-    public int getId_razonRechazo() { return idRazonRechazo; }
+    public RazonRechazo getRazonRechazo() {
+        return razonRechazo;
+    }
 
-    public void setId_razonRechazo(int idRazonRechazo) { this.idRazonRechazo = idRazonRechazo; }
+    public void setRazonRechazo(RazonRechazo razonRechazo) {
+        this.razonRechazo = razonRechazo;
+    }
 
     public String getEstado() { return estado; }
 
@@ -85,16 +89,7 @@ public class Detalle extends iComponente{
     //Implementacion de metodos
     @Override
     public void agregarComponente(iComponente composicion) {
-        System.out.println("Esta es una excepcion, función no implementada en Detalle");
-    }
-
-    @Override
-    public String mostrarDatos() {
-        return "Detalle #" + id +
-                ". Proforma #" + idProforma +
-                ". Repuesto #" + repuesto +
-                ". Razón de rechazo: " + idRazonRechazo +
-                ". Estado: " + estado + ".";
+        this.razonRechazo = (RazonRechazo) composicion;
     }
 
     @Override

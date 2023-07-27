@@ -43,7 +43,5 @@ public abstract class iComponente {
     public void setId(int id) { this.id = id; }
 
     //Metodos Abstractos
-    public abstract String mostrarDatos();
-
     public abstract void agregarComponente(iComponente composicion);
 }

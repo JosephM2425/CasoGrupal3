@@ -18,6 +18,7 @@ public class ProformaDAO {
     private UsuarioDAO _usuarioDAO = new UsuarioDAO();
     private DetalleDAO _detalleDAO = new DetalleDAO();
     private NaveDAO _naveDAO = new NaveDAO();
+
     /**
      * Metodo para registrar un proforma
      * @param proforma es de tipo Proforma y corresponde al proforma por registrar
@@ -100,4 +101,31 @@ public class ProformaDAO {
         return proformas;
     }
 
+    /**
+     * Metodo para actualizar un proforma
+     * @param proforma es de tipo Proforma y corresponde al proforma por actualizar
+     * @return 0 si se actualizo correctamente ,1 si no se pudo registrar
+     */
+    public int actualizarProforma(Proforma proforma) {
+        try {
+            Conexion con = new Conexion();
+            Connection conn = con.getConnection();
+            PreparedStatement stmt = null;
+            String query = "UPDATE hni_proformas SET id_Cliente = ?, id_Vendedor = ?, estado = ?, id_Nave= ?  WHERE ID_PROFORMA = ?";
+
+            stmt = conn.prepareStatement(query);
+            stmt.setInt(1,proforma.getCliente().getId());
+            stmt.setInt(2,proforma.getVendedor().getId());
+            stmt.setString(3,proforma.getEstado());
+            stmt.setInt(4,proforma.getNave().getIdNave());
+            stmt.setInt(5,proforma.getId());
+            stmt.execute();
+
+            con.Desconectar();
+            return 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 1;
+        }
+    }
 }

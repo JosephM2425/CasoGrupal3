@@ -3,6 +3,7 @@ package ui.Controladores;
 import bl.entities.builder.gestor.GestorBuilder;
 import bl.entities.builder.objects.Usuario;
 import bl.entities.composite.components.Proforma;
+import bl.entities.composite.components.RazonRechazo;
 import bl.entities.factory.gestor.GestorFactory;
 import bl.entities.factory.product.Repuesto;
 import bl.entities.proxy.UsuarioProxy;
@@ -152,7 +153,7 @@ public class ControladorGestionProformas {
                 ObservableList<Detalle> detallesObservable = tProformaRepuesto.getItems();
                 ArrayList<Detalle> detalles = new ArrayList<>(detallesObservable);
                 for (Detalle detalle : detalles) {
-                    mostrarAlerta(Alert.AlertType.INFORMATION, "Prueba.", detalle.getEstado());
+                    gestorComposite.actualizarDetalle(detalle);
                 }
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Operación exitosa", "Se ha guardado la proforma con éxito");
             }
@@ -166,6 +167,24 @@ public class ControladorGestionProformas {
         usuariosCB.getItems().clear();
         tProformaRepuesto.getItems().clear();
         cargarComboBoxes();
+    }
+
+    @FXML
+    public void editarEstado(TableColumn.CellEditEvent<?,?> event){
+        Object newValue = event.getNewValue();
+        TablePosition<?,?> position = event.getTablePosition();
+        int row = position.getRow();
+        Detalle detalle = tProformaRepuesto.getItems().get(row);
+        detalle.setEstado(newValue.toString());
+    }
+
+    @FXML
+    public void editarRazon(TableColumn.CellEditEvent<?,?> event){
+        Object newValue = event.getNewValue();
+        TablePosition<?,?> position = event.getTablePosition();
+        int row = position.getRow();
+        Detalle detalle = tProformaRepuesto.getItems().get(row);
+        detalle.setRazonRechazo(new RazonRechazo(newValue.toString()));
     }
 
     private void mostrarAlerta(Alert.AlertType alertType, String title, String message) {

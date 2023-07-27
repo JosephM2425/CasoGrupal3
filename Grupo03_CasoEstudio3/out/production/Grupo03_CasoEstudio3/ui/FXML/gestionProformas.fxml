@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="438.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Controladores.ControladorGestionProformas">
+<AnchorPane prefHeight="438.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Controladores.ControladorGestionProformas">
    <children>
       <ComboBox fx:id="proformasCB" layoutX="154.0" layoutY="25.0" prefHeight="25.0" prefWidth="456.0" />
       <Text layoutX="82.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Proformas" />
@@ -23,5 +23,7 @@
       <Text layoutX="96.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Detalles Proforma" />
       <Button layoutX="286.0" layoutY="399.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="211.0" text="Guardar" />
       <Button layoutX="624.0" layoutY="25.0" mnemonicParsing="false" onAction="#seleccionarProforma" text="Seleccionar" />
+      <Text layoutX="571.0" layoutY="416.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estado:" />
+      <Text fx:id="textProformaEstado" layoutX="618.0" layoutY="416.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sin Definir" wrappingWidth="87.13671875" />
    </children>
 </AnchorPane>

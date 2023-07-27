@@ -49,9 +49,9 @@ public class ControladorRepuestosProforma {
     @FXML
     TableColumn<Detalle,String> tNombreRepDetalle;
     @FXML
-    TableColumn<Detalle,String> tEstado;
+    TableColumn<Detalle,String> tDescRepuestoDetalle;
     @FXML
-    TableColumn<Detalle,String> tRazonRechazo;
+    TableColumn<Detalle,String> tEstado;
     @FXML
     public ObservableList<Detalle> observableDetalles;
     public ComboBox<Proforma> proformaCB;
@@ -114,6 +114,9 @@ public class ControladorRepuestosProforma {
     }
 
     public void actualizarProformas (ActionEvent actionEvent) {
+        proformaCB.getItems().clear();
+        listaRepuestos.getItems().clear();
+        listaDetalles.getItems().clear();
         cargarComboBoxes();
     }
 
@@ -144,6 +147,52 @@ public class ControladorRepuestosProforma {
         if(proformaCB.getValue() != null) {
             listaRepuestos.getItems().clear();
             cargarListaRepuestos(proformaCB.getValue());
+            listaDetalles.getItems().clear();
+            cargarListaDetalles(proformaCB.getValue());
+        }
+    }
+
+    /**
+     * Metodo para anadir un repuesto a una proforma
+     * @param actionEvent es de tipo ActionEvent representa algun tipo de accion realizada
+     */
+    public void anadirRepuestoAProforma(ActionEvent actionEvent) {
+        try {
+            Repuesto repuesto = listaRepuestos.getSelectionModel().getSelectedItem();
+            if (repuesto == null) {
+                mostrarAlerta(Alert.AlertType.ERROR, "No ha seleccionado un repuesto", "No ha seleccionado un repuesto.\nPor favor seleccione uno e inténtelo de nuevo.");
+            } else {
+                int resultado = gestorComposite.nuevoDetalle(proformaCB.getValue().getId(), repuesto, "Pendiente");
+                if(resultado == 0) {
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Adición del repuesto exitosa", "Se ha añadido exitosamente el repuesto a la proforma.");
+                    cargarListaDetalles(proformaCB.getValue());
+                }
+                else {
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error en la adición de repuesto ", "Ha ocurrido un error la adición de repuesto,\npor favor inténtelo de nuevo.");
+                }
+            }
+        } catch (Exception e){
+            mostrarAlerta(Alert.AlertType.ERROR,"Error.","Ha ocurrido un error, por favor inténtelo de nuevo.");
+        }
+    }
+
+    /**
+     * Metodo para actualizar el TableView de los detalles
+     */
+    public void cargarListaDetalles(Proforma proforma) {
+        try {
+            listaDetalles.getItems().clear();
+            int idProforma = proforma.getId();
+            observableDetalles = FXCollections.observableArrayList(gestorComposite.obtenerDetalles(idProforma));
+            gestorComposite.obtenerDetalles(idProforma).forEach(detalle -> observableDetalles.addAll(detalle));
+            observableDetalles = FXCollections.observableArrayList(gestorComposite.obtenerDetalles(idProforma));
+            tIdDetalle.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId() + ""));
+            tNombreRepDetalle.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRepuesto().getNombre()));
+            tDescRepuestoDetalle.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRepuesto().getDescripcion()));
+            tEstado.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEstado()));
+            listaDetalles.setItems(observableDetalles);
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
 }

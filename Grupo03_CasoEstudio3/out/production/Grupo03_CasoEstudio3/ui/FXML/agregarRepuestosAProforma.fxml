@@ -34,12 +34,12 @@
             <TableView fx:id="listaDetalles" layoutX="47.0" layoutY="359.0" prefHeight="136.0" prefWidth="706.0">
                <columns>
                   <TableColumn fx:id="tIdDetalle" prefWidth="76.00003051757812" text="ID Detalle" />
-                  <TableColumn fx:id="tNombreRepDetalle" prefWidth="148.79995727539062" text="Nombre Repuesto" />
-                  <TableColumn fx:id="tEstado" prefWidth="136.0" text="Estado" />
-                  <TableColumn fx:id="tRazonRechazo" prefWidth="341.5999755859375" text="Razon de rechazo" />
+                  <TableColumn fx:id="tNombreRepDetalle" prefWidth="203.20004272460938" text="Nombre Repuesto" />
+                  <TableColumn fx:id="tDescRepuestoDetalle" prefWidth="309.5999755859375" text="Descripción Repuesto" />
+                  <TableColumn fx:id="tEstado" prefWidth="114.39996337890625" text="Estado" />
                </columns>
             </TableView>
-            <Button layoutX="374.0" layoutY="303.0" mnemonicParsing="false" text="Añadir" />
+            <Button layoutX="374.0" layoutY="303.0" mnemonicParsing="false" onAction="#anadirRepuestoAProforma" text="Añadir" />
             <Button layoutX="604.0" layoutY="82.0" mnemonicParsing="false" onAction="#actualizarProformas" text="Actualizar proformas" />
          </children>
       </Pane>

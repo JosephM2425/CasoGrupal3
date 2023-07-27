@@ -1,9 +1,5 @@
 package bl.Proxy;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 2fbdfd3 (add proxy)
 import bl.entities.builder.objects.Usuario;
 
 public class UsuarioProxy extends Usuario {
@@ -25,12 +21,4 @@ public class UsuarioProxy extends Usuario {
             return false;
         }
     }
-
-
-<<<<<<< HEAD
-=======
-public class UsuarioProxy {
->>>>>>> 5bb0e3a (add proxy)
-=======
->>>>>>> 2fbdfd3 (add proxy)
 }

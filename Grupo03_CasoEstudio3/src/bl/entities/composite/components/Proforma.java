@@ -102,29 +102,6 @@ public class Proforma extends iComponente{
         this.listaDetalles.add(detalle);
     }
 
-    /**
-     * Muestra los datos de la proforma
-     * @return un String con los datos de la proforma
-     */
-    @Override
-    public String mostrarDatos() {
-        String mLin1="" , mLine2 = "";
-        mLin1 = "Listando Proforma #" + this.getId() +
-                ".\nCliente " + getCliente().getNombre() + " " + getCliente().getApellido1() + " " + getCliente().getApellido2() +
-                ".\nVendedor " + getVendedor().getNombre() + " " + getVendedor().getApellido1() + " " + getVendedor().getApellido2() +
-                ".\nEstado # " + getEstado() +
-                ".\nDetalles:\n";
-        if(listaDetalles == null || listaDetalles.isEmpty()){
-            mLine2 = "No hay detalles en esta proforma.\n";
-        } else {
-            for (iComponente detalle : listaDetalles) {
-                mLine2 += detalle.mostrarDatos() + "\n";
-            }
-        }
-
-        return mLin1 + mLine2 +"\n";
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

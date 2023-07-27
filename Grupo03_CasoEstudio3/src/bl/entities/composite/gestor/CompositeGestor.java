@@ -54,14 +54,34 @@ public class CompositeGestor {
         iComponente proforma = encontrarComponente(1, idProforma);
         iComponente detalle = encontrarComponente(2, idDetalle);
 
-        if(proforma != null && detalle != null)
+        if (proforma != null && detalle != null)
             proforma.agregarComponente(detalle);
+    }
+
+    public int actualizarProforma(Proforma proforma) {
+        try {
+            iComponente temp = proforma;
+            _ProformaDAO.actualizarProforma((Proforma) temp);
+            return 0;
+        } catch (Exception e) {
+            return 1;
+        }
+    }
+
+    public int actualizarDetalle(Detalle detalle) {
+        try {
+            iComponente temp = detalle;
+            _DetalleDAO.actualizarDetalle((Detalle) temp);
+            return 0;
+        } catch (Exception e) {
+            return 1;
+        }
     }
 
     private iComponente encontrarComponente(int tipo, int id) {
         ArrayList<iComponente> tempArr = null;
 
-        switch(tipo) {
+        switch (tipo) {
             case 1:
                 tempArr = obtenerComponentes(1);
                 break;
@@ -79,7 +99,7 @@ public class CompositeGestor {
     }
 
     public ArrayList<iComponente> obtenerComponentes(int tipo) {
-        switch(tipo) {
+        switch (tipo) {
             case 1:
                 return _ProformaDAO.listarProformas();
             case 2:
@@ -112,17 +132,6 @@ public class CompositeGestor {
         ArrayList<iComponente> tempArr2 = _DetalleDAO.listarDetalles(idProforma);
         for (iComponente item : tempArr2) {
             tempArr.add((Detalle) item);
-        }
-        return tempArr;
-    }
-
-    public ArrayList<iComponente> obtenerLista(int tipo) {
-        String Mensaje = "";
-        ArrayList<iComponente> tempArr = obtenerComponentes(tipo);
-
-        if(tempArr != null) {
-            for (iComponente item : tempArr)
-                Mensaje += item.mostrarDatos() + "\n";
         }
         return tempArr;
     }

@@ -11,6 +11,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.text.Text;
 import javafx.util.Callback;
 import bl.entities.composite.components.Detalle;
 import bl.entities.composite.gestor.CompositeGestor;
@@ -39,6 +40,9 @@ public class ControladorGestionProformas {
     @FXML
     public ObservableList<Repuesto> observableRepuestos;
     private GestorFactory gestorFactory = new GestorFactory();
+    @FXML
+    private Text textProformaEstado;
+
 
     @FXML
     public void initialize() {
@@ -82,6 +86,7 @@ public class ControladorGestionProformas {
     public void seleccionarProforma(ActionEvent actionEvent) {
         int id_proforma = proformasCB.getValue().getId();
         cargarTablaDetalleProforma(id_proforma);
+        actualizarEstado(id_proforma);
     }
 
     public void cargarTablaDetalleProforma(int id_proforma) {
@@ -108,5 +113,10 @@ public class ControladorGestionProformas {
         razon.setCellFactory(TextFieldTableCell.forTableColumn());
         estado.setCellFactory(TextFieldTableCell.forTableColumn());
         tProformaRepuesto.setItems(repuestosFiltrados);
+    }
+
+    public void actualizarEstado(int id_proforma){
+        Proforma proforma = gestorComposite.obtenerProformas().get(id_proforma);
+        textProformaEstado.setText(proforma.getEstado());
     }
 }

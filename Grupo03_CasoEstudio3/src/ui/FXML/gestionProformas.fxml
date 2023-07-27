@@ -16,8 +16,8 @@
       <Text layoutX="81.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Detalles Proforma" />
       <TableView fx:id="tProformaRepuesto" layoutX="82.0" layoutY="136.0" prefHeight="244.0" prefWidth="618.0">
         <columns>
-          <TableColumn fx:id="nombre" prefWidth="126.0" text="NombreRepuesto" />
-          <TableColumn fx:id="descripcion" prefWidth="136.0" text="DescRepuesto" />
+          <TableColumn fx:id="nombre" prefWidth="126.0" text="Nombre Repuesto" />
+          <TableColumn fx:id="descripcion" prefWidth="136.0" text="Descripción Repuesto" />
             <TableColumn fx:id="precio" prefWidth="98.0" text="Precio" />
             <TableColumn fx:id="razon" prefWidth="109.0" text="Razón" />
             <TableColumn fx:id="estado" prefWidth="148.0" text="Estado" />

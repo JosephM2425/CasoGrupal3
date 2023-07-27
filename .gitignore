@@ -25,3 +25,5 @@ replay_pid*
 
 JDBC/
 Grupo03_CasoEstudio3/src/bl/entities/composite/Main/MainPrueba.java
+# IntelliJ
+/out/

@@ -30,7 +30,7 @@ public class CompositeGestor {
     public int nuevaProforma(Cliente cliente, Vendedor vendedor, Nave nave, String estado) {
         try {
             iComponente temp = null;
-            temp = new Proforma(cliente, vendedor, nave, estado);
+            temp = new Proforma(cliente, vendedor, nave);
             _ProformaDAO.registrarProforma((Proforma) temp);
             return 0;
         } catch (Exception e) {

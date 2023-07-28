@@ -4,7 +4,9 @@ import bl.entities.builder.objects.Cliente;
 import bl.entities.builder.objects.Nave;
 import bl.entities.builder.objects.Vendedor;
 import bl.entities.composite.base.iComponente;
-import bl.entities.state.State;
+import bl.entities.state.concreto.InProgressState;
+import bl.entities.state.abstracto.State;
+import bl.entities.state.concreto.PendingState;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -32,14 +34,14 @@ public class Proforma extends iComponente{
      * @param cliente es de tipo Cliente y corresponde al cliente
      * @param vendedor es de tipo Vendedor y corresponde al vendedor
      * @param nave es de tipo Nave y corresponde a la nave
-     * @param estado es de tipo String y corresponde al estado de la proforma
      */
-    public Proforma(int id, Cliente cliente, Vendedor vendedor, Nave nave, String estado) {
+    public Proforma(int id, Cliente cliente, Vendedor vendedor, Nave nave) {
         super(id);
+        setState(new InProgressState());
         this.cliente = cliente;
         this.vendedor = vendedor;
         this.nave = nave;
-        this.estado = estado;
+        this.estado = state.obtenerEstado();
         this.listaDetalles = new ArrayList<iComponente>();
     }
 
@@ -48,13 +50,13 @@ public class Proforma extends iComponente{
      * @param cliente es de tipo Cliente y corresponde al cliente
      * @param vendedor es de tipo Vendedor y corresponde al vendedor
      * @param nave es de tipo Nave y corresponde a la nave
-     * @param estado es de tipo String y corresponde al estado de la proforma
      */
-    public Proforma(Cliente cliente, Vendedor vendedor, Nave nave, String estado) {
+    public Proforma(Cliente cliente, Vendedor vendedor, Nave nave) {
+        setState(new PendingState());
         this.cliente = cliente;
         this.vendedor = vendedor;
         this.nave = nave;
-        this.estado = estado;
+        this.estado = state.obtenerEstado();
         this.listaDetalles = new ArrayList<iComponente>();
     }
 
@@ -89,7 +91,12 @@ public class Proforma extends iComponente{
     public ArrayList<iComponente> getListaComposicion() { return listaDetalles; }
 
     public void setListaComposicion(ArrayList<iComponente> listaDetalles) { this.listaDetalles = listaDetalles; }
-
+    public void setState (State state){
+        this.state = state;
+    }
+    public String getState() {
+        return this.state.obtenerEstado();
+    }
     //Metodos
 
 
@@ -114,10 +121,4 @@ public class Proforma extends iComponente{
         return Objects.hash(id);
     }
 
-
-    //Metodos del Patron State
-    public void changeState(State state, String estado) {
-        this.state = state;
-        this.estado = estado;
-    }
 }

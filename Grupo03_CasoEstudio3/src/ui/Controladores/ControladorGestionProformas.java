@@ -6,6 +6,9 @@ import bl.entities.composite.components.Proforma;
 import bl.entities.factory.gestor.GestorFactory;
 import bl.entities.factory.product.Repuesto;
 import bl.entities.proxy.UsuarioProxy;
+import bl.entities.state.concreto.InProgressState;
+import bl.entities.state.abstracto.State;
+import bl.entities.state.gestor.GestorState;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -21,7 +24,6 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 
 public class ControladorGestionProformas {
@@ -43,6 +45,7 @@ public class ControladorGestionProformas {
     @FXML
     public ObservableList<Repuesto> observableRepuestos;
     private GestorFactory gestorFactory = new GestorFactory();
+    private GestorState gestorState = new GestorState();
     @FXML
     private Text textProformaEstado;
     private GestorBuilder gestorBuilder = new GestorBuilder();
@@ -143,6 +146,8 @@ public class ControladorGestionProformas {
     }
 
     public void guardarProforma(ActionEvent actionEvent) {
+        int id_proforma = proformasCB.getValue().getId();
+        Proforma proforma = obtenerProforma(id_proforma);
         if(usuariosCB.getValue() != null) {
             UsuarioProxy usuarioSesion = new UsuarioProxy();
             usuarioSesion.setUsuario(usuariosCB.getValue());
@@ -155,10 +160,32 @@ public class ControladorGestionProformas {
                     mostrarAlerta(Alert.AlertType.INFORMATION, "Prueba.", detalle.getEstado());
                 }
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Operación exitosa", "Se ha guardado la proforma con éxito");
+                proforma = gestorState.cambiarEstado(proforma, 3);
+                System.out.println("Estado de Actualizacon de Proforma: " + gestorComposite.actualizarProforma(proforma));
+                System.out.println(
+                        "ID:" + proforma.getId() + "\n" +
+                        "Estado Proforma:" + proforma.getEstado() + "\n" +
+                        "Cliente:" + proforma.getCliente().getNombre() + "\n" +
+                        "Vendedor: " + proforma.getVendedor().getNombre()
+                );
+                actualizarEstado(id_proforma);
             }
+
+
         } else {
             mostrarAlerta(Alert.AlertType.ERROR, "Error", "Debe seleccionar un usuario.");
         }
+    }
+
+    public Proforma obtenerProforma(int id){
+        ArrayList<Proforma> listaProformas = gestorComposite.obtenerProformas();
+        for (Proforma tempProforma:
+             listaProformas) {
+            if (tempProforma.getId() == id) {
+                return tempProforma;
+            }
+        }
+        return null;
     }
 
     public void actualizarListas(ActionEvent actionEvent) {

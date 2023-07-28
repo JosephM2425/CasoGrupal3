@@ -8,6 +8,7 @@ import bl.entities.builder.objects.*;
 import bl.entities.composite.base.iComponente;
 import bl.entities.composite.components.Detalle;
 import bl.entities.composite.components.Proforma;
+import bl.entities.composite.components.RazonRechazo;
 
 /**
  * @author Carolina Arias
@@ -119,15 +120,33 @@ public class DetalleDAO {
             Conexion con = new Conexion();
             Connection conn = con.getConnection();
             PreparedStatement stmt = null;
-            String query = "UPDATE hni_detalledetalle SET id_proforma = ?, id_repuesto = ?, id_razonRechazo = ?, estado= ?  WHERE id_detalle = ?";
-
+            String query = "INSERT into hni_razonesrechazo (descripcion) VALUES (?)";
             stmt = conn.prepareStatement(query);
-            stmt.setInt(1, detalle.getId_proforma());
-            stmt.setInt(2, detalle.getRepuesto().getId_Repuesto());
-            stmt.setInt(3, detalle.getRazonRechazo().getId());
-            stmt.setString(4, detalle.getEstado());
-            stmt.setInt(5, detalle.getId());
+            stmt.setString(1, detalle.getRazonRechazo().getDescripcion());
             stmt.execute();
+
+            String query1 = "SELECT * FROM hni_razonesrechazo WHERE descripcion = " + detalle.getRazonRechazo().getDescripcion();
+            Statement stmt1 = null;
+            ResultSet rs = null;
+            stmt1 = conn.createStatement();
+            rs = stmt1.executeQuery(query1);
+            RazonRechazo razonRechazo = new RazonRechazo();
+
+            while (rs.next()) {
+                razonRechazo.setId(rs.getInt("id_razon"));
+                razonRechazo.setDescripcion(rs.getString("descripcion"));
+            }
+            detalle.setRazonRechazo(razonRechazo);
+
+            String query2 = "UPDATE hni_detalleproforma SET id_proforma = ?, id_repuesto = ?, id_razonRechazo = ?, estado= ?  WHERE id_detalle = ?";
+            PreparedStatement stmt2 = null;
+            stmt2 = conn.prepareStatement(query2);
+            stmt2.setInt(1, detalle.getId_proforma());
+            stmt2.setInt(2, detalle.getRepuesto().getId_Repuesto());
+            stmt2.setInt(3, detalle.getRazonRechazo().getId());
+            stmt2.setString(4, detalle.getEstado());
+            stmt2.setInt(5, detalle.getId());
+            stmt2.execute();
 
             con.Desconectar();
             return 0;

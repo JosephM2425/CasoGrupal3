@@ -118,6 +118,9 @@ public class ControladorGestionProformas {
 
     public void seleccionarProforma(ActionEvent actionEvent) {
         int id_proforma = proformasCB.getValue().getId();
+        Proforma proforma = obtenerProforma(id_proforma);
+        proforma = gestorState.cambiarEstado(proforma, 2);
+        System.out.println("Estado de Actualizacon de Proforma: " + gestorComposite.actualizarProforma(proforma));
         cargarTablaDetalleProforma(id_proforma);
         actualizarEstado(id_proforma);
     }
@@ -163,12 +166,6 @@ public class ControladorGestionProformas {
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Operación exitosa", "Se ha guardado la proforma con éxito");
                 proforma = gestorState.cambiarEstado(proforma, 3);
                 System.out.println("Estado de Actualizacon de Proforma: " + gestorComposite.actualizarProforma(proforma));
-                System.out.println(
-                        "ID:" + proforma.getId() + "\n" +
-                        "Estado Proforma:" + proforma.getEstado() + "\n" +
-                        "Cliente:" + proforma.getCliente().getNombre() + "\n" +
-                        "Vendedor: " + proforma.getVendedor().getNombre()
-                );
                 actualizarEstado(id_proforma);
             }
 

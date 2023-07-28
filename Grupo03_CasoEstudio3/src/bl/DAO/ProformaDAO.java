@@ -79,6 +79,7 @@ public class ProformaDAO {
 
                 int idNave = rs.getInt("ID_NAVE");
                 Nave nave = _naveDAO.buscarNave(idNave);
+                nave.setIdNave(idNave);
                 proforma.setNave(nave);
 
                 proforma.setEstado(rs.getString("ESTADO"));
